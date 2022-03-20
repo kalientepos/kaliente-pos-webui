@@ -12,8 +12,8 @@ import { Password } from 'primereact/password';
 import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
 
-import { FormikErrors, FormikTouched, useFormik } from 'formik';
-import './login.css';
+import { FormikErrors, useFormik } from 'formik';
+import './login.scss';
 
 interface LoginForm {
     email: string;
@@ -72,33 +72,31 @@ function Login() {
 
 
     return (
-        <div className='page'>
-            <p style={{margin: '1rem 0', fontSize: '24px', fontWeight: 500}}>Login</p>
-            <Card style={{margin: '0.5rem', width: '50%'}}>
-                <form onSubmit={formik.handleSubmit} className="p-fluid" style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '3rem'
-                }}>
-                    <div className="field">
+        <div className=' flex flex-column align-items-center justify-content-center'>
+            <p className='text-center text-primary text-4xl font-bold m-6'>Login</p>
+            <Card className='surface-100 shadow-7 w-6'>
+                <form className='p-fluid' onSubmit={formik.handleSubmit}>
+                    <div className="field pb-3">
                         <span className="p-float-label">
                             <InputText id="email" name="email" value={formik.values.email} onChange={formik.handleChange} autoFocus />
                             <label htmlFor="email">Email</label>
                         </span>
+                        {
+                            (formik.errors.email && formik.touched.email )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.email}</p>
+                        }
                     </div>
-                    {
-                        (formik.errors.email && formik.touched.email )  && <p>{formik.errors.email}</p>
-                    }
-                    <div className="field">
+                    
+                    <div className="field pb-3">
                         <span className="p-float-label">
                             <Password id="password" name="password" value={formik.values.password} onChange={formik.handleChange} />
                             <label htmlFor="password">Password</label>
                         </span>
+                        {
+                            (formik.errors.password && formik.touched.password )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.password}</p>
+                        }
                     </div>
-                    {
-                        (formik.errors.password && formik.touched.password )  && <p>{formik.errors.password}</p>
-                    }
-                    <Button type="submit" label="Submit" className="mt-2" disabled={formik.isSubmitting}/>
+                    
+                    <Button type="submit" label="Submit" className="mt-2 font-open-sans" disabled={formik.isSubmitting} loading={formik.isSubmitting}/>
                 </form>
             </Card>
 

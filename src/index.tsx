@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PrimeReact from 'primereact/api';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 // import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
@@ -8,10 +9,11 @@ import { store } from './store';
 import "primereact/resources/themes/bootstrap4-light-purple/theme.css";   //theme
 import "primereact/resources/primereact.min.css";                         //core css
 import "primeicons/primeicons.css";                                       //icons
-import './index.css';
+import './index.scss';
 import App from './app';
 import { BrowserRouter } from 'react-router-dom';
 //
+PrimeReact.ripple = true;
 
 ReactDOM.render(
   <React.StrictMode>

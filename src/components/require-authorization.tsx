@@ -1,11 +1,10 @@
 import jwtDecode from "jwt-decode";
-import React, { ReactElement, ReactNode, useEffect } from "react";
-import { BrowserRouter, Navigate, Outlet, Route, RouteProps, Routes, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store";
 import { login } from "../store/slices/auth-slice";
 
 
-function RequireAuthentication({ roles = [], children }: { roles?: Array<string>, children: JSX.Element }) {
+function RequireAuthorization({ roles = [], children }: { roles?: Array<string>, children: JSX.Element }) {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.auth);
@@ -26,4 +25,4 @@ function RequireAuthentication({ roles = [], children }: { roles?: Array<string>
     return <Navigate to="/login" state={{from: location}} />
 }
 
-export default RequireAuthentication;
+export default RequireAuthorization;

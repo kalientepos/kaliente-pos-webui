@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
 import {Button} from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../store';
-import { login } from '../../store/slices/auth-slice';
-import jwtDecode from 'jwt-decode';
 
 function Home() {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     useEffect(() => {
 

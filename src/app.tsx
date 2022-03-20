@@ -14,7 +14,7 @@ import ProductCatalogueAdd from './pages/product-catalogue/product-catalogue-add
 import ProductCatalogueDetails from './pages/product-catalogue/product-catalogue-details';
 import Product from "./pages/product";
 import ProductCatalogue from "./pages/product-catalogue";
-import RequireAuthentication from "./components/protected-route";
+import RequireAuthorization from "./components/require-authorization";
 import Administration from "./pages/administration";
 import PersonnelList from "./pages/administration/personnel-list";
 import PersonnelAdd from "./pages/administration/personnel-add";
@@ -28,14 +28,14 @@ function App() {
         <Route path="login" element={<Login/>} />
         <Route path="register" element={<Register/>} />
         <Route path="" element={
-          <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
+          <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
             <Home/>
-          </RequireAuthentication>}
+          </RequireAuthorization>}
         />
         <Route path="product" element={
-          <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
+          <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
             <Product/>
-          </RequireAuthentication>
+          </RequireAuthorization>
         }>
           <Route path="" element={<ProductList/>} />
           <Route path=":id" element={<ProductDetails/>} />
@@ -43,18 +43,18 @@ function App() {
         </Route>
         <Route 
           path="product-catalogue" element={
-            <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
+            <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
               <ProductCatalogue/>
-            </RequireAuthentication>
+            </RequireAuthorization>
         }>
           <Route path="" element={<ProductCatalogueList/>}/>
           <Route path=":id" element={<ProductCatalogueDetails/>}/>
           <Route path="add" element={<ProductCatalogueAdd/>}/>
         </Route>
         <Route path="administration" element={
-          <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
+          <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
           <Administration/>
-          </RequireAuthentication>
+          </RequireAuthorization>
         }>
           <Route path="" element={<PersonnelList/>}/>
           <Route path="add" element={<PersonnelAdd/>}/>

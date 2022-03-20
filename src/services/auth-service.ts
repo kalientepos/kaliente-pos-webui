@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { baseApiUrl } from "../models/constants";
 import { LoginDto } from "../models/dtos/auth/login-dto";
 import { RegisterDto } from "../models/dtos/auth/register-dto";
@@ -26,6 +26,7 @@ class AuthService {
             return response;
         } catch (err: any) {
             localStorage.removeItem('token');
+            console.log(err);
             return err.response;
         }
     }
