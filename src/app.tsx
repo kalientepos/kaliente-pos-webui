@@ -16,6 +16,8 @@ import Product from "./pages/product";
 import ProductCatalogue from "./pages/product-catalogue";
 import RequireAuthentication from "./components/protected-route";
 import Administration from "./pages/administration";
+import PersonnelList from "./pages/administration/personnel-list";
+import PersonnelAdd from "./pages/administration/personnel-add";
 //
 
 
@@ -41,7 +43,7 @@ function App() {
         </Route>
         <Route 
           path="product-catalogue" element={
-            <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
+            <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
               <ProductCatalogue/>
             </RequireAuthentication>
         }>
@@ -49,10 +51,13 @@ function App() {
           <Route path=":id" element={<ProductCatalogueDetails/>}/>
           <Route path="add" element={<ProductCatalogueAdd/>}/>
         </Route>
-        <Route path="administration" element={<Administration/>}>
-          <Route path="" element={<ProductCatalogueList/>}/>
-          <Route path=":id" element={<ProductCatalogueDetails/>}/>
-          <Route path="add" element={<ProductCatalogueAdd/>}/>
+        <Route path="administration" element={
+          <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
+          <Administration/>
+          </RequireAuthentication>
+        }>
+          <Route path="" element={<PersonnelList/>}/>
+          <Route path="add" element={<PersonnelAdd/>}/>
         </Route>
       </Routes>
   );
