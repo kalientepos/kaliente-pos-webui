@@ -14,35 +14,24 @@ import ProductCatalogueAdd from './pages/product-catalogue/product-catalogue-add
 import ProductCatalogueDetails from './pages/product-catalogue/product-catalogue-details';
 import Product from "./pages/product";
 import ProductCatalogue from "./pages/product-catalogue";
-import { useAppSelector } from "./store";
 import RequireAuthentication from "./components/protected-route";
+import Administration from "./pages/administration";
 //
 
 
 function App() {
-  const user = useAppSelector((state) => state.auth);
-  const location = useLocation();
-
-  useEffect(() => {
-    console.log('ROUTE CHANGED');
-    console.log(user);
-    if(user.token === null) {
-
-    }
-  }, [location])
-
   return (
       <Routes>
         <Route path="*" element={<Error/>}/>
         <Route path="login" element={<Login/>} />
         <Route path="register" element={<Register/>} />
         <Route path="" element={
-          <RequireAuthentication>
+          <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
             <Home/>
           </RequireAuthentication>}
         />
         <Route path="product" element={
-          <RequireAuthentication>
+          <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
             <Product/>
           </RequireAuthentication>
         }>
@@ -52,10 +41,15 @@ function App() {
         </Route>
         <Route 
           path="product-catalogue" element={
-            <RequireAuthentication>
+            <RequireAuthentication roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
               <ProductCatalogue/>
             </RequireAuthentication>
         }>
+          <Route path="" element={<ProductCatalogueList/>}/>
+          <Route path=":id" element={<ProductCatalogueDetails/>}/>
+          <Route path="add" element={<ProductCatalogueAdd/>}/>
+        </Route>
+        <Route path="administration" element={<Administration/>}>
           <Route path="" element={<ProductCatalogueList/>}/>
           <Route path=":id" element={<ProductCatalogueDetails/>}/>
           <Route path="add" element={<ProductCatalogueAdd/>}/>

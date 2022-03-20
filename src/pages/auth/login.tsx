@@ -1,24 +1,18 @@
-import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
+
+import {login} from './../../store/slices/auth-slice';
+import AuthService from '../../services/auth-service';
+import { useNavigate } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-import { Dropdown } from 'primereact/dropdown';
-import { Calendar } from 'primereact/calendar';
 import { Password } from 'primereact/password';
-import { Checkbox } from 'primereact/checkbox';
-import { Dialog } from 'primereact/dialog';
-import {Card} from 'primereact/card';
+import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
 
-
 import { FormikErrors, FormikTouched, useFormik } from 'formik';
-
-import AuthService from '../../services/auth-service';
-import { hideModal, showModal } from '../../store/slices/modal-slice';
-
-
 import './login.css';
 
 interface LoginForm {
@@ -29,12 +23,8 @@ interface LoginForm {
 function Login() {
 
     const toast = useRef<any>(null);
-
-    // const dispatch = useAppDispatch();
-    // const modal = useAppSelector((state) => state.modal);
-
-    
-
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const authService = new AuthService();
     
 
@@ -64,9 +54,16 @@ function Login() {
         },
         onSubmit: async (data) => {
             const response = await authService.authenticate({email: data.email, password: data.password});
-            console.log(response);
+            if(response === undefined) {
+                toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
+            }
             if(response.status !== 200) {
                 toast.current.show({severity:'error', summary: response.data.message, life: 3000});
+            } else {
+                const userInfo: any = jwtDecode(response.data.data);
+                console.table(userInfo);
+                dispatch(login({email: userInfo.sub, token: response.data.data, role: userInfo.scopes}));
+                navigate('/');
             }
 
             formik.resetForm();

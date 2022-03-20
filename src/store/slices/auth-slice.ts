@@ -1,19 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { email: '', token: '' }
+const initialState = { email: '', token: '', role: ''}
 
 const authSlice = createSlice({
     name: 'Auth', 
     initialState,
     reducers: {
         register(state, action) {
-            state.token = action.payload['token']
+            state.token = action.payload.token
         },
         login(state, action) {
-            state.token = action.payload['token']
+            state.email = action.payload.email
+            state.token = action.payload.token
+            state.role = action.payload.role
         },
-        logout(state, action) {
-            state.token = '';
+        logout(state) {
+            state = initialState;
         }
     }
 });
