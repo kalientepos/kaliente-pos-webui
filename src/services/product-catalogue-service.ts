@@ -1,23 +1,31 @@
+import axios from "axios";
+import { baseApiUrl } from "../models/constants";
+
 export default class ProductCatalogueService {
 
-    getProductCatalogueById() {
-
+    async getProductCatalogueById(id: string) {
+        const response = await axios.get(`${baseApiUrl}/product_catalogue/getById/${id}`);
+        return response;
     }
 
-    getProductCatalogues() {
-
+    async getProductCatalogues() {
+        const response = await axios.get(`${baseApiUrl}/product_catalogue/getAll`);
+        return response;
     }
 
-    addProductCatalogue() {
-
+    async addProductCatalogue(catalogueAddDto: any) {
+        const response = await axios.get(`${baseApiUrl}/product_catalogue/addNewCatalogue`, catalogueAddDto);
+        return response;
     }
 
-    updateProductCatalogue() {
-
+    async updateProductCatalogue(catalogueUpdateDto: any) {
+        const response = await axios.get(`${baseApiUrl}/product_catalogue/update`, catalogueUpdateDto);
+        return response;
     }
 
-    removeProductCatalogue() {
-
+    async removeProductCatalogue(id: string) {
+        const response = await axios.get(`${baseApiUrl}/product_catalogue/delete/${id}`);
+        return response;
     }
 
 }
