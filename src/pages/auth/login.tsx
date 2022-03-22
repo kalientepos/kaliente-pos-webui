@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store';
+import React, { useRef } from 'react';
+import { useAppDispatch } from '../../store';
 
 import {login} from './../../store/slices/auth-slice';
 import AuthService from '../../services/auth-service';
@@ -14,6 +14,7 @@ import { Toast } from 'primereact/toast';
 
 import { FormikErrors, useFormik } from 'formik';
 import './login.scss';
+import Page from '../../components/page';
 
 interface LoginForm {
     email: string;
@@ -72,36 +73,36 @@ function Login() {
 
 
     return (
-        <div className=' flex flex-column align-items-center justify-content-center'>
-            <p className='text-center text-primary text-4xl font-bold m-6'>Login</p>
-            <Card className='surface-100 shadow-7 w-6'>
-                <form className='p-fluid' onSubmit={formik.handleSubmit}>
-                    <div className="field pb-3">
-                        <span className="p-float-label">
-                            <InputText id="email" name="email" value={formik.values.email} onChange={formik.handleChange} autoFocus />
-                            <label htmlFor="email">Email</label>
-                        </span>
-                        {
-                            (formik.errors.email && formik.touched.email )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.email}</p>
-                        }
-                    </div>
-                    
-                    <div className="field pb-3">
-                        <span className="p-float-label">
-                            <Password id="password" name="password" value={formik.values.password} onChange={formik.handleChange} />
-                            <label htmlFor="password">Password</label>
-                        </span>
-                        {
-                            (formik.errors.password && formik.touched.password )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.password}</p>
-                        }
-                    </div>
-                    
-                    <Button type="submit" label="Submit" className="mt-2 font-open-sans" disabled={formik.isSubmitting} loading={formik.isSubmitting}/>
-                </form>
-            </Card>
+        <Page classes='flex flex-column'>
+                <p className='text-center text-primary text-4xl font-bold m-3 justify-content-start'>Kaliente POS Backoffice</p>
+                <Card className='surface-100 shadow-7 w-6'>
+                    <form className='p-fluid' onSubmit={formik.handleSubmit}>
+                        <div className="field pb-3">
+                            <span className="p-float-label">
+                                <InputText id="email" name="email" value={formik.values.email} onChange={formik.handleChange} autoFocus />
+                                <label htmlFor="email">Email</label>
+                            </span>
+                            {
+                                (formik.errors.email && formik.touched.email )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.email}</p>
+                            }
+                        </div>
+                        
+                        <div className="field pb-3">
+                            <span className="p-float-label">
+                                <Password id="password" name="password" value={formik.values.password} onChange={formik.handleChange} />
+                                <label htmlFor="password">Password</label>
+                            </span>
+                            {
+                                (formik.errors.password && formik.touched.password )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.password}</p>
+                            }
+                        </div>
+                        
+                        <Button type="submit" label="Submit" className="mt-2 font-open-sans" disabled={formik.isSubmitting} loading={formik.isSubmitting}/>
+                    </form>
+                </Card>
 
-            <Toast ref={toast}/>
-        </div>
+                <Toast ref={toast}/>
+        </Page>
     );
 }
 

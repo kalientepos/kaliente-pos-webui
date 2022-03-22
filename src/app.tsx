@@ -40,6 +40,7 @@ function App() {
           <Route path="" element={<ProductList/>} />
           <Route path=":id" element={<ProductDetails/>} />
           <Route path="add" element={<ProductAdd/>} />
+          <Route path="update/:productId" element={<ProductAdd/>} />
         </Route>
         <Route 
           path="product-catalogue" element={
@@ -50,6 +51,7 @@ function App() {
           <Route path="" element={<ProductCatalogueList/>}/>
           <Route path=":id" element={<ProductCatalogueDetails/>}/>
           <Route path="add" element={<ProductCatalogueAdd/>}/>
+          <Route path="update/:catalogueId" element={<ProductCatalogueAdd/>} />
         </Route>
         <Route path="administration" element={
           <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
