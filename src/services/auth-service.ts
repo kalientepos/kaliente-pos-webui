@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { baseApiUrl } from "../models/constants";
-import { LoginDto } from "../models/dtos/auth/login-dto";
+import { AuthenticationRequestDto } from "../models/dtos/auth/authentication.request";
 import { RegisterDto } from "../models/dtos/auth/register-dto";
 import getClient from './clients/http-client';
 
@@ -15,13 +15,13 @@ class AuthService {
         }
     }
 
-    async authenticate(authenticateDto: LoginDto) {
+    async authenticate(authenticateDto: AuthenticationRequestDto) {
         try {
             const response = await getClient().post(`${baseApiUrl}/auth/authenticate`, authenticateDto);
             if(response !== undefined) {
-                console.log(`Storing data on local storage: ${response.data.data}`);
+                console.log(`Storing data on local storage: ${response.data.payload}`);
                 localStorage.removeItem('token');
-                localStorage.setItem('token', response.data.data);
+                localStorage.setItem('token', response.data.payload);
             }
             return response;
         } catch (err: any) {

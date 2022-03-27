@@ -24,7 +24,7 @@ function ProductCatalogueList() {
     const fetchCatalogues = useCallback(async () => {
         const response = await productCatalogueService.getProductCatalogues();
         console.log(response.data);
-        setProductCatalogues(response.data);
+        setProductCatalogues(response.data.payload);
     }, []);
 
     useEffect(() => {

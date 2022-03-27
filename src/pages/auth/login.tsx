@@ -55,15 +55,16 @@ function Login() {
         },
         onSubmit: async (data) => {
             const response = await authService.authenticate({email: data.email, password: data.password});
+            console.warn(response.data.payload);
             if(response === undefined) {
                 toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
             }
             if(response.status !== 200) {
                 toast.current.show({severity:'error', summary: response.data.message, life: 3000});
             } else {
-                const userInfo: any = jwtDecode(response.data.data);
+                const userInfo: any = jwtDecode(response.data.payload);
                 console.table(userInfo);
-                dispatch(login({email: userInfo.sub, token: response.data.data, role: userInfo.scopes}));
+                dispatch(login({email: userInfo.sub, token: response.data.payload, role: userInfo.scopes}));
                 navigate('/');
             }
 

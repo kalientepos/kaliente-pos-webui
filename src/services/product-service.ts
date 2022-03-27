@@ -1,5 +1,7 @@
 import axios from "axios";
 import { baseApiUrl } from "../models/constants";
+import { ProductAddRequestDto } from "../models/dtos/product/product-add.request";
+import { ProductUpdateRequestDto } from "../models/dtos/product/product-update-request";
 import getClient from "./clients/http-client";
 
 export default class ProductService {
@@ -14,13 +16,13 @@ export default class ProductService {
         return response;
     }
 
-    async addProduct(productAddDto: any) {
-        const response = await getClient().get(`${baseApiUrl}/product/addNewProduct`, productAddDto);
+    async addProduct(productAddDto: ProductAddRequestDto) {
+        const response = await getClient().post(`${baseApiUrl}/product/addNewProduct`, productAddDto);
         return response;
     }
 
-    async updateProduct(productUpdateDto: any) {
-        const response = await getClient().get(`${baseApiUrl}/product/update`, productUpdateDto);
+    async updateProduct(productUpdateDto: ProductUpdateRequestDto) {
+        const response = await getClient().put(`${baseApiUrl}/product/update`, productUpdateDto);
         return response;
     }
 

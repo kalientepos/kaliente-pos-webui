@@ -87,7 +87,7 @@ function ProductCatalogueAdd() {
         console.log(catalogueId);
         if(catalogueId) {
             const result = await productCatalogueService.getProductCatalogueById(catalogueId);
-            setProductCatalogue(result.data);
+            setProductCatalogue(result.data.payload);
             console.log(result);
         }
 
