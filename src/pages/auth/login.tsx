@@ -55,7 +55,6 @@ function Login() {
         },
         onSubmit: async (data) => {
             const response = await authService.authenticate({email: data.email, password: data.password});
-            console.warn(response.data.payload);
             if(response === undefined) {
                 toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
             }

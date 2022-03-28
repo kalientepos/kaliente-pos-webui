@@ -18,6 +18,8 @@ import RequireAuthorization from "./components/require-authorization";
 import Administration from "./pages/administration";
 import PersonnelList from "./pages/administration/personnel-list";
 import PersonnelAdd from "./pages/administration/personnel-add";
+import AdminAdd from "./pages/administration/admin-add";
+import AdminList from "./pages/administration/admin-list";
 //
 
 
@@ -55,11 +57,15 @@ function App() {
         </Route>
         <Route path="administration" element={
           <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
-          <Administration/>
+            <Administration/>
           </RequireAuthorization>
         }>
           <Route path="" element={<PersonnelList/>}/>
-          <Route path="add" element={<PersonnelAdd/>}/>
+
+          <Route path="personnel" element={<PersonnelList/>}/>
+          <Route path="personnel/add" element={<PersonnelAdd/>}/>
+          <Route path="admin" element={<AdminList/>}/>
+          <Route path="admin/add" element={<AdminAdd/>}/>
         </Route>
       </Routes>
   );

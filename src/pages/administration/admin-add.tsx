@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom";
 import Page from "../../components/page";
 import AdministrationService from "../../services/administration-service";
 
-interface RegisterPersonnelForm {
+interface RegisterAdminForm {
     email: '',
     password: ''
 }
 
-function PersonnelAdd() {
+function AdminAdd() {
 
     const adminService = new AdministrationService();
 
@@ -27,7 +27,7 @@ function PersonnelAdd() {
             password: '',
         },
         validate: (data) => {
-            let errors: FormikErrors<RegisterPersonnelForm> = {};
+            let errors: FormikErrors<RegisterAdminForm> = {};
 
             if (!data.email) {
                 errors.email = 'Email is required.';
@@ -46,15 +46,16 @@ function PersonnelAdd() {
             return errors;
         },
         onSubmit: async (data) => {
-            const response = await adminService.registerPersonnel({email: data.email, password: data.password});
+            const response = await adminService.registerAdmin({email: data.email, password: data.password});
             if(response === undefined) {
                 toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
             }
             if(response.status !== 200) {
                 toast.current.show({severity:'error', summary: response.data.message, life: 3000});
             } else {
-                console.warn(response.data.registeredPersonnelEmail);
-                toast.current.show({severity: 'success', summary: `Admin ${response.data.registeredPersonnelEmail} has been successfully registered!`});
+                console.table(response.data);
+                console.warn(toast);
+                toast.current.show({severity: 'success', summary: `Admin ${response.data} has been successfully registered!`, life: 3000});
                 navigate('/');
             }
 
@@ -64,7 +65,7 @@ function PersonnelAdd() {
 
     return (
         <Page classes='flex flex-column'>
-                <p className='text-center text-primary text-4xl font-bold m-3 justify-content-start'>Register Personnel</p>
+                <p className='text-center text-primary text-4xl font-bold m-3 justify-content-start'>RegisterAdmin</p>
                 <Card className='surface-100 shadow-7 w-6'>
                     <form className='p-fluid' onSubmit={formik.handleSubmit}>
                         <div className="field pb-3">
@@ -93,7 +94,8 @@ function PersonnelAdd() {
 
                 <Toast ref={toast}/>
         </Page>
+        
     );
 }
 
-export default PersonnelAdd;
+export default AdminAdd;

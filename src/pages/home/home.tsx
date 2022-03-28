@@ -11,7 +11,7 @@ function Home() {
     return (
         <div>
             <h1 style={{textAlign: 'center'}}>Welcome to Kaliente POS!</h1>
-            <Button className='ml-3 mr-3' title='Administration' onClick={() => navigate('/')}>Administration (WIP)</Button>
+            <Button className='ml-3 mr-3' title='Administration' onClick={() => navigate('/administration')}>Administration (WIP)</Button>
             <Button className='mr-3' title='Product Catalogues' onClick={() => navigate('/product')}>Products</Button>
             <Button title='Products' onClick={() => navigate('/product-catalogue')}>Product Catalogues</Button>
         </div>
