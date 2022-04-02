@@ -9,9 +9,10 @@ function RequireAuthorization({ roles = [], children }: { roles?: Array<string>,
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.auth);
 
+    console.warn(user);
+
     if(user.email === '') {
         const token = localStorage.getItem('token');
-        
         if(token !== null) {
             const userInfo: any = jwtDecode(token);
             dispatch(login({email: userInfo.sub, token: token, role: userInfo.scopes}));

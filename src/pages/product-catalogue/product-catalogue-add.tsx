@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Page from "../../components/page";
+import Page from "../../components/page/page";
 import ProductCatalogueService from "../../services/product-catalogue-service";
 
 interface ProductCatalogueCreateForm {
@@ -41,21 +41,25 @@ function ProductCatalogueAdd() {
         onSubmit: async(data) => {
             if(catalogueId) {
                 try {
-                    const response = await productCatalogueService.updateProductCatalogue({
+                    const result = await productCatalogueService.updateProductCatalogue({
                         id: productCatalogue.id,
                         title: data.title,
                         description: data.description
                     });
-                    console.warn(response);
-                    if(response === undefined) {
+
+                    console.warn(result);
+
+                    const response = result.data.payload as any;
+
+                    if(result === undefined) {
                         toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
                     }
-                    if(response.status !== 201) {
-                        toast.current.show({severity:'error', summary: response.data.message, life: 3000});
+                    if(result.status !== 200) {
+                        toast.current.show({severity:'error', summary: result.data.message, life: 3000});
                     } 
                     else {
-                        toast.current.show({severity: 'success', summary: `Product Catalogue (${productCatalogue.title}) Updated`, life: 3000});
-                        navigate('./../');
+                        toast.current.show({severity: 'success', summary: `Product Catalogue (${response['addedCatalogueId']}) Updated`, life: 3000});
+                        navigate('./../../');
                     }
                 } catch(ex: any) {
                     console.warn(ex.response);
@@ -72,12 +76,11 @@ function ProductCatalogueAdd() {
                 if(response === undefined) {
                     toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
                 }
-                if(response.status !== 201) {
+                if(response.status !== 200) {
                     toast.current.show({severity:'error', summary: response.data.message, life: 3000});
                 } 
                 else {
-                    toast.current.show({severity: 'success', summary: `Product Catalogue "${data.title}" Created`, life: 3000});
-                    navigate('./../');
+                    toast.current.show({severity: 'success', summary: `Product Catalogue "${data.title}" Created`, life: 3000})
                 }
             }
         }
@@ -87,8 +90,8 @@ function ProductCatalogueAdd() {
         console.log(catalogueId);
         if(catalogueId) {
             const result = await productCatalogueService.getProductCatalogueById(catalogueId);
-            setProductCatalogue(result.data.payload);
             console.log(result);
+            setProductCatalogue(result.data.payload.product);
         }
 
     }, []);

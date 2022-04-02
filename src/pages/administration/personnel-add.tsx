@@ -6,7 +6,7 @@ import { Password } from "primereact/password";
 import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Page from "../../components/page";
+import Page from "../../components/page/page";
 import AdministrationService from "../../services/administration-service";
 
 interface RegisterPersonnelForm {
@@ -54,7 +54,7 @@ function PersonnelAdd() {
                 toast.current.show({severity:'error', summary: response.data.message, life: 3000});
             } else {
                 console.warn(response.data.registeredPersonnelEmail);
-                toast.current.show({severity: 'success', summary: `Admin ${response.data.registeredPersonnelEmail} has been successfully registered!`});
+                toast.current.show({severity: 'success', summary: `Admin ${response.data.payload.registeredPersonnelEmail} has been successfully registered!`});
                 navigate('/');
             }
 

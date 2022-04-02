@@ -14,7 +14,7 @@ import { Toast } from 'primereact/toast';
 
 import { FormikErrors, useFormik } from 'formik';
 import './login.scss';
-import Page from '../../components/page';
+import Page from '../../components/page/page';
 
 interface LoginForm {
     email: string;
@@ -54,16 +54,18 @@ function Login() {
             return errors;
         },
         onSubmit: async (data) => {
-            const response = await authService.authenticate({email: data.email, password: data.password});
-            if(response === undefined) {
+            const result = await authService.authenticate({email: data.email, password: data.password});
+
+            if(result === undefined) {
                 toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
             }
-            if(response.status !== 200) {
-                toast.current.show({severity:'error', summary: response.data.message, life: 3000});
+            if(result.status !== 200) {
+                toast.current.show({severity:'error', summary: result.data.message, life: 3000});
             } else {
-                const userInfo: any = jwtDecode(response.data.payload);
-                console.table(userInfo);
-                dispatch(login({email: userInfo.sub, token: response.data.payload, role: userInfo.scopes}));
+                const response: any = result.data.payload;
+                const tokenData: any = jwtDecode(response.jwt);
+
+                dispatch(login({email: tokenData.sub, token: response.jwt, role: tokenData.scopes}));
                 navigate('/');
             }
 

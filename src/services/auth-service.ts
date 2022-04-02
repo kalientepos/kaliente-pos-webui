@@ -19,9 +19,9 @@ class AuthService {
         try {
             const response = await getClient().post(`${baseApiUrl}/auth/authenticate`, authenticateDto);
             if(response !== undefined) {
-                console.log(`Storing data on local storage: ${response.data.payload}`);
+                console.log(`Storing data on local storage: ${response.data.payload.jwt}`);
                 localStorage.removeItem('token');
-                localStorage.setItem('token', response.data.payload);
+                localStorage.setItem('token', response.data.payload.jwt);
             }
             return response;
         } catch (err: any) {

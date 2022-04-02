@@ -6,7 +6,7 @@ import { Password } from "primereact/password";
 import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Page from "../../components/page";
+import Page from "../../components/page/page";
 import AdministrationService from "../../services/administration-service";
 
 interface RegisterAdminForm {
@@ -14,7 +14,7 @@ interface RegisterAdminForm {
     password: ''
 }
 
-function AdminAdd() {
+const AdminAdd: React.FC = () => {
 
     const adminService = new AdministrationService();
 
@@ -53,9 +53,7 @@ function AdminAdd() {
             if(response.status !== 200) {
                 toast.current.show({severity:'error', summary: response.data.message, life: 3000});
             } else {
-                console.table(response.data);
-                console.warn(toast);
-                toast.current.show({severity: 'success', summary: `Admin ${response.data} has been successfully registered!`, life: 3000});
+                toast.current.show({severity: 'success', summary: `Admin ${response.data.payload['registeredAdminEmail']} has been successfully registered!`, life: 3000});
                 navigate('/');
             }
 

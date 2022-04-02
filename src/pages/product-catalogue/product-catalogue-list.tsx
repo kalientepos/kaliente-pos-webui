@@ -4,7 +4,7 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Page from "../../components/page";
+import Page from "../../components/page/page";
 import ProductCatalogueService from "../../services/product-catalogue-service";
 
 function ProductCatalogueList() {
@@ -16,15 +16,15 @@ function ProductCatalogueList() {
     const operationsBody = (rowData: any) => (
         <div>
             <Button className="mr-1 p-button-primary" title='Edit' label="Edit" onClick={() => navigate(`./update/${rowData.id}`)}/>
-            <Button className="mr-1 p-button-info" title='Details' label="Details" />
+            {/* <Button className="mr-1 p-button-info" title='Details' label="Details" /> */}
             <Button className="p-button-danger" title='Delete' label="Delete"  />
         </div>
     );
 
     const fetchCatalogues = useCallback(async () => {
         const response = await productCatalogueService.getProductCatalogues();
-        console.log(response.data);
-        setProductCatalogues(response.data.payload);
+        console.log(response);
+        setProductCatalogues(response.data.payload.productCatalogues);
     }, []);
 
     useEffect(() => {
