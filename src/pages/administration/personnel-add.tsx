@@ -63,7 +63,7 @@ function PersonnelAdd() {
     });
 
     return (
-        <Page classes='flex flex-column'>
+        <Page showDrawer>
                 <p className='text-center text-primary text-4xl font-bold m-3 justify-content-start'>Register Personnel</p>
                 <Card className='surface-100 shadow-7 w-6'>
                     <form className='p-fluid' onSubmit={formik.handleSubmit}>

@@ -1,10 +1,13 @@
 import React from "react";
+import Page from "../../components/page/page";
 import ProductService from "../../services/product-service";
 
 function ProductDetails() {
     const productService = new ProductService();
     return (
-        <div>Product Details</div>
+        <Page showDrawer>
+            <p>Product Details</p>
+        </Page>
     )
 };
 

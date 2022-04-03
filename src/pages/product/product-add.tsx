@@ -7,7 +7,7 @@ function ProductAdd() {
     const productService = new ProductService();
 
     return (
-        <Page>
+        <Page showDrawer>
             <div>Add Product</div>
         </Page>
     )

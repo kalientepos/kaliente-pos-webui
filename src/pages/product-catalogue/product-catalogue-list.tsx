@@ -33,7 +33,7 @@ function ProductCatalogueList() {
 
 
     return (
-        <Page>
+        <Page showDrawer>
             <p className="mt-3 mb-3 text-strong">Product Catalogues</p>
             <Button className="mb-3 p-button-success" label="Create New Catalogue" onClick={() => navigate('./add')} />
             <DataTable value={productCatalogues} rows={productCatalogues.length} responsiveLayout="scroll">

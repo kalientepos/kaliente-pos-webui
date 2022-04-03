@@ -75,9 +75,9 @@ function Login() {
 
 
     return (
-        <Page classes='flex flex-column'>
-                <p className='text-center text-primary text-4xl font-bold m-3 justify-content-start'>Kaliente POS Backoffice</p>
-                <Card className='surface-100 shadow-7 w-6'>
+        <Page>
+                <p className='text-center text-primary text-4xl font-bold m-3'>Kaliente POS Backoffice</p>
+                <Card className='w-6'>
                     <form className='p-fluid' onSubmit={formik.handleSubmit}>
                         <div className="field pb-3">
                             <span className="p-float-label">
@@ -88,7 +88,6 @@ function Login() {
                                 (formik.errors.email && formik.touched.email )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.email}</p>
                             }
                         </div>
-                        
                         <div className="field pb-3">
                             <span className="p-float-label">
                                 <Password id="password" name="password" value={formik.values.password} onChange={formik.handleChange} />
@@ -98,11 +97,9 @@ function Login() {
                                 (formik.errors.password && formik.touched.password )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.password}</p>
                             }
                         </div>
-                        
                         <Button type="submit" label="Submit" className="mt-2 font-open-sans" disabled={formik.isSubmitting} loading={formik.isSubmitting}/>
                     </form>
                 </Card>
-
                 <Toast ref={toast}/>
         </Page>
     );

@@ -1,8 +1,16 @@
+import { Button } from "primereact/button";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import Page from "../../components/page/page";
 
 function Error() {
+    const navigate = useNavigate();
+
     return (
-        <div>Page Not Found</div>
+        <Page>
+            <p>Could not find the requested location.</p>
+            <Button label="Return to Dashboard" name="Return Button" onClick={() => navigate('/')}/>
+        </Page>
     )
 };
 

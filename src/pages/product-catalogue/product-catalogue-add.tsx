@@ -109,7 +109,7 @@ function ProductCatalogueAdd() {
     }, [productCatalogue]);
 
     return (
-        <Page>
+        <Page showDrawer>
             <Card>
                 <form className="p-fluid" onSubmit={formik.handleSubmit}>
                     <div className="field pb-3">

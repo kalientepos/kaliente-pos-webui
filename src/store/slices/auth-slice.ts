@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = { email: '', token: '', role: ''}
 
@@ -15,7 +15,10 @@ const authSlice = createSlice({
             state.role = action.payload.role
         },
         logout(state) {
-            state = initialState;
+            state.token = '';
+            state.email = '';
+            state.role = '';
+            localStorage.removeItem('token');
         }
     }
 });
