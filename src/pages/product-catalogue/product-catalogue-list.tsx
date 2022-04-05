@@ -33,9 +33,9 @@ function ProductCatalogueList() {
 
 
     return (
-        <Page showDrawer>
-            <p className="mt-3 mb-3 text-strong">Product Catalogues</p>
-            <Button className="mb-3 p-button-success" label="Create New Catalogue" onClick={() => navigate('./add')} />
+        <Page showDrawer contentClasses="align-items-stretch justify-content-center ml-3 mr-3">
+            <p className="mt-3 mb-3 text-center text-2xl text-primary font-bold">Product Catalogues</p>
+            <Button className="mb-3 p-button-success w-full" label="Create New Catalogue" onClick={() => navigate('./add')} />
             <DataTable value={productCatalogues} rows={productCatalogues.length} responsiveLayout="scroll">
                 <Column field="title" header="Title"/>
                 <Column field="description" header="Description"/>
