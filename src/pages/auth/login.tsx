@@ -75,7 +75,7 @@ function Login() {
 
 
     return (
-        <Page>
+        <Page showDrawer>
                 <p className='text-center text-primary text-4xl font-bold m-3'>Kaliente POS Backoffice</p>
                 <Card className='w-6'>
                     <form className='p-fluid' onSubmit={formik.handleSubmit}>
