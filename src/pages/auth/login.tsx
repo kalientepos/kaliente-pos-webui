@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useAppDispatch } from '../../store';
 
-import {login} from './../../store/slices/auth-slice';
+import {login} from '../../store/slices/auth/auth-slice';
 import AuthService from '../../services/auth-service';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
@@ -15,6 +15,8 @@ import { Toast } from 'primereact/toast';
 import { FormikErrors, useFormik } from 'formik';
 import './login.scss';
 import Page from '../../components/page/page';
+import { loginWithCredentials } from '../../store/slices/auth/auth-thunk';
+import { AuthenticationRequestDto } from '../../models/dtos/auth/authentication.request';
 
 interface LoginForm {
     email: string;
@@ -26,7 +28,6 @@ function Login() {
     const toast = useRef<any>(null);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const authService = new AuthService();
     
 
     const formik = useFormik({
@@ -54,20 +55,23 @@ function Login() {
             return errors;
         },
         onSubmit: async (data) => {
-            const result = await authService.authenticate({email: data.email, password: data.password});
+            // const result = await AuthService.authenticate({email: data.email, password: data.password});
 
-            if(result === undefined) {
-                toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
-            }
-            if(result.status !== 200) {
-                toast.current.show({severity:'error', summary: result.data.message, life: 3000});
-            } else {
-                const response: any = result.data.payload;
-                const tokenData: any = jwtDecode(response.jwt);
+            // if(result === undefined) {
+            //     toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
+            // }
+            // if(result.status !== 200) {
+            //     toast.current.show({severity:'error', summary: result.data.message, life: 3000});
+            // } else {
+            //     const response: any = result.data.payload;
+            //     const tokenData: any = jwtDecode(response.jwt);
 
-                dispatch(login({email: tokenData.sub, token: response.jwt, role: tokenData.scopes}));
-                navigate('/');
-            }
+            //     dispatch(login({email: tokenData.sub, token: response.jwt, role: tokenData.scopes}));
+            //     navigate('/');
+            // }
+
+            const request: AuthenticationRequestDto = { email: data.email, password: data.password };
+            dispatch(loginWithCredentials(request));
 
             formik.resetForm();
         }

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { WritableDraft } from "immer/dist/internal";
-import authSlice from "./auth-slice";
+import authSlice from "./auth/auth-slice";
 
 const initialState = {
     isVisible: false,

@@ -5,7 +5,7 @@ import {Accordion, AccordionTab} from "primereact/accordion";
 import './drawer.scss';
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store";
-import { logout } from "../../store/slices/auth-slice";
+import { logout } from "../../store/slices/auth/auth-slice";
 import DrawerItem from "./drawer-item/drawer-item";
 
 interface DrawerProps {

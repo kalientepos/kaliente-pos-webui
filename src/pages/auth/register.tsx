@@ -4,7 +4,6 @@ import './register.scss';
 
 
 function Register() {
-    const authService = new AuthService();
     return (
         <div>Register</div>
     );

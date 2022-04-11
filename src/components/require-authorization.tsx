@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store";
-import { login } from "../store/slices/auth-slice";
+import { login } from "../store/slices/auth/auth-slice";
 
 
 function RequireAuthorization({ roles = [], children }: { roles?: Array<string>, children: JSX.Element }) {

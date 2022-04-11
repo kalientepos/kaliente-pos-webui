@@ -4,7 +4,7 @@ import { AuthenticationRequestDto } from "../models/dtos/auth/authentication.req
 import { RegisterDto } from "../models/dtos/auth/register-dto";
 import getClient from './clients/http-client';
 
-class AuthService {
+const AuthService = {
 
     async getPersonnelList() {
         try {
@@ -13,7 +13,7 @@ class AuthService {
         } catch (err: any) {
             return err.response;
         }
-    }
+    },
 
     async authenticate(authenticateDto: AuthenticationRequestDto) {
         try {
@@ -29,7 +29,7 @@ class AuthService {
             console.log(err);
             return err.response;
         }
-    }
+    },
 
     async register(registerDto: RegisterDto) {
         try {
@@ -38,7 +38,7 @@ class AuthService {
         } catch (err: any) {
             return err.response;
         }
-    }
+    },
 
     async registerAdmin(registerAdminDto: any) {
         try {
@@ -47,7 +47,7 @@ class AuthService {
         } catch (err: any) {
             return err.response;
         }
-    }
+    },
 
     async registerPersonnel(registerPersonnelDto: any) {
         try {
@@ -56,7 +56,7 @@ class AuthService {
         } catch (err: any) {
             return err.response;
         }
-    }
+    },
 
 
 }

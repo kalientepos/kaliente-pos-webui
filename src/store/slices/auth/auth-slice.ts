@@ -1,4 +1,5 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import authThunkBuilder from "./auth-thunk";
 
 const initialState = { email: '', token: '', role: ''}
 
@@ -20,7 +21,8 @@ const authSlice = createSlice({
             state.role = '';
             localStorage.removeItem('token');
         }
-    }
+    },
+    extraReducers: (builder) => authThunkBuilder(builder),
 });
 export const { register, login, logout } = authSlice.actions;
 export default authSlice.reducer;
