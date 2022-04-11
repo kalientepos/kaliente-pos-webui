@@ -61,9 +61,7 @@ function App() {
           </RequireAuthorization>
         }>
           <Route path="" element={<PersonnelList/>}/>
-          <Route path="personnel/add" element={<PersonnelAdd/>}/>
-          <Route path="admin" element={<AdminList/>}/>
-          <Route path="admin/add" element={<AdminAdd/>}/>
+          <Route path="add" element={<PersonnelAdd/>}/>
         </Route>
       </Routes>
   );

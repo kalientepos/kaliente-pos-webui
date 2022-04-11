@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../components/page/page";
 import AdministrationService from "../../services/administration-service";
 
@@ -16,6 +16,8 @@ interface RegisterPersonnelForm {
 
 function PersonnelAdd() {
 
+    const {personnelId} = useParams();
+    
     const adminService = new AdministrationService();
 
     const toast = useRef<any>(null);

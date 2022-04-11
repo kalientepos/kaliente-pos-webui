@@ -1,0 +1,12 @@
+.drawer-item {
+    width: 100%;
+    text-align: center;
+    color: var(--primary-color-text);
+    cursor: pointer;
+    gap: .2rem;
+}
+
+.drawer-item-body {
+    width: 100%;
+    overflow: hidden;
+}

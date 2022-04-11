@@ -1,10 +1,12 @@
 import { Button } from "primereact/button";
 import React from "react";
 import {Divider} from "primereact/divider";
+import {Accordion, AccordionTab} from "primereact/accordion";
 import './drawer.scss';
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store";
 import { logout } from "../../store/slices/auth-slice";
+import DrawerItem from "./drawer-item/drawer-item";
 
 interface DrawerProps {
     className?: string;
@@ -21,22 +23,19 @@ const Drawer: React.FC<DrawerProps> = ({className = '', title = null}) => {
             <div className="drawer-title text-center">
                 <h2 className="p-4 text-bold text-primary">{title}</h2>
             </div>
-            <div className="drawer-content flex flex-column justify-content-center align-items-center gap-1rem p-2">
-                <Button className="w-full" title="Dashboard" label="Dashboard" name="Dashboard" onClick={() => navigate('')}/>
+            <div className="drawer-content flex flex-column justify-content-center align-items-center p-2 ">
+                
+                <DrawerItem title="Administration" icon="pi pi-user">
+                    <Button className="p-button-rounded w-full" label="Personnel List" onClick={() => navigate('/administration')}/>
+                </DrawerItem>
 
-                <p className="text-primary text-lg">Administration</p>
-                <Button className="w-full" title="Add Personnel" label="Add Personnel" name="AddPersonnel" onClick={() => navigate('/administration/personnel/add')}/>
-                <Button className="w-full" title="Personnel List" label="Personnel List" name="PersonnelList" onClick={() => navigate('/administration/personnel')}/>
+                <DrawerItem title="Inventory" icon="pi pi-database">
+                    <Button className="p-button-rounded w-full" label="Products" onClick={() => navigate('/product')}/>
+                    <Button className="p-button-rounded w-full" label="Product Catalogues" onClick={() => navigate('/product-catalogue')}/>
+                </DrawerItem>
 
-                <p className="text-primary text-lg">Product Catalogue</p>
-                <Button className="w-full" title="AddProductCatalogue" label="Add Product Catalogue" name="AddProductCatalogue" onClick={() => navigate('/product-catalogue/add')}/>
-                <Button className="w-full" title="Product Catalogues" label="Product Catalogues" name="Product Catalogues" onClick={() => navigate('/product-catalogue')}/>
+                <Button className="p-button-rounded p-button-danger w-full" title="Login" label="Logout" name="Login" onClick={() => dispatch(logout())}/>
 
-                <p className="text-primary text-lg">Product</p>
-                <Button className="w-full" title="Add Product" label="Add Product" name="AddProduct" onClick={() => navigate('/product/add')}/>
-                <Button className="w-full" title="Products" label="Products" name="Products" onClick={() => navigate('/product')}/>
-
-                <Button className="p-button-danger w-full" title="Login" label="Logout" name="Login" onClick={() => dispatch(logout())}/>
             </div>
         </div>
     );

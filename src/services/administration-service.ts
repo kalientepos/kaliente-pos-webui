@@ -8,7 +8,7 @@ class AdministrationService {
 
     async getPersonnelList() {
         try {
-            const response = await getClient().post(`${baseApiUrl}/auth/getPersonnelList`);
+            const response = await getClient().get(`${baseApiUrl}/auth/getPersonnelList`);
             return response;
         } catch (err: any) {
             return err.response;
