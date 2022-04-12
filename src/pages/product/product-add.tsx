@@ -4,7 +4,6 @@ import ProductService from "../../services/product-service";
 
 function ProductAdd() {
 
-    const productService = new ProductService();
 
     return (
         <Page showDrawer>

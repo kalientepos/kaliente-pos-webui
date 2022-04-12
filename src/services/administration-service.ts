@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { baseApiUrl } from "../models/constants";
 import { AuthenticationRequestDto } from "../models/dtos/auth/authentication.request";
-import { RegisterDto } from "../models/dtos/auth/register-dto";
 import getClient from './clients/http-client';
 
 class AdministrationService {

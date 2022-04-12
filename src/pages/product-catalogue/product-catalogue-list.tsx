@@ -8,7 +8,6 @@ import Page from "../../components/page/page";
 import ProductCatalogueService from "../../services/product-catalogue-service";
 
 function ProductCatalogueList() {
-    const productCatalogueService = new ProductCatalogueService();
     const [isLoadingCatalogues, setLoadingCatalogues] = useState(false);
     const [productCatalogues, setProductCatalogues] = useState([]);
     const navigate = useNavigate();
@@ -22,7 +21,7 @@ function ProductCatalogueList() {
     );
 
     const fetchCatalogues = useCallback(async () => {
-        const response = await productCatalogueService.getProductCatalogues();
+        const response = await ProductCatalogueService.getProductCatalogues();
         console.log(response);
         setProductCatalogues(response.data.payload.productCatalogues);
     }, []);

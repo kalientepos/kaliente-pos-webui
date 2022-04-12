@@ -1,8 +1,5 @@
 import React, { Children, useState } from "react";
-import {Ripple} from "primereact/ripple";
 import DrawerItemHeader from "./drawer-item-header/drawer-item-header";
-import { CSSTransition } from "react-transition-group";
-import AnimateHeight from 'react-animate-height';
 
 import { Button } from "primereact/button";
 import './drawer-item.scss';

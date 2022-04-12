@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { baseApiUrl } from "../models/constants";
 import { AuthenticationRequestDto } from "../models/dtos/auth/authentication.request";
-import { RegisterDto } from "../models/dtos/auth/register-dto";
 import getClient from './clients/http-client';
 
 const AuthService = {
@@ -27,15 +26,6 @@ const AuthService = {
         } catch (err: any) {
             localStorage.removeItem('token');
             console.log(err);
-            return err.response;
-        }
-    },
-
-    async register(registerDto: RegisterDto) {
-        try {
-            const response = await getClient().post(`${baseApiUrl}/auth/register`, registerDto);
-            return response.data;
-        } catch (err: any) {
             return err.response;
         }
     },

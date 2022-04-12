@@ -9,7 +9,6 @@ export const loginWithCredentials = createAsyncThunk<AuthenticationResponseDto, 
     async(loginDto, thunkAPI) => {
         console.warn(loginDto);
         const response = await AuthService.authenticate(loginDto);
-        console.log(response);
         if(response)
             return response.data.payload as AuthenticationResponseDto;
         else return response;
@@ -21,15 +20,15 @@ export const loginWithCredentials = createAsyncThunk<AuthenticationResponseDto, 
 const authThunkBuilder = (builder: ActionReducerMapBuilder<any>) => {
 
     builder.addCase(loginWithCredentials.pending, (state: any) => {
-        console.log('STILL PENDING...');
+        console.log('[Authenticate] STILL PENDING...');
     });
 
     builder.addCase(loginWithCredentials.fulfilled, (state: any) => {
-        console.log('FULFILLED...');
+        console.log('[Authenticate] FULFILLED...');
     });
 
     builder.addCase(loginWithCredentials.rejected, (state: any) => {
-        console.log('FAILED!');
+        console.log('[Authenticate] FAILED!');
     });
 
 }

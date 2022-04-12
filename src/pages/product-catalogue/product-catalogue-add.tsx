@@ -20,7 +20,6 @@ function ProductCatalogueAdd() {
         title: '',
         description: ''
     });
-    const productCatalogueService = new ProductCatalogueService();
 
     const navigate = useNavigate();
 
@@ -41,7 +40,7 @@ function ProductCatalogueAdd() {
         onSubmit: async(data) => {
             if(catalogueId) {
                 try {
-                    const result = await productCatalogueService.updateProductCatalogue({
+                    const result = await ProductCatalogueService.updateProductCatalogue({
                         id: productCatalogue.id,
                         title: data.title,
                         description: data.description
@@ -67,7 +66,7 @@ function ProductCatalogueAdd() {
                 }
                 
             } else {
-                const response = await productCatalogueService.addProductCatalogue({
+                const response = await ProductCatalogueService.addProductCatalogue({
                     title: data.title,
                     description: data.description
                 });
@@ -89,7 +88,7 @@ function ProductCatalogueAdd() {
     const getProductCatalogueDetails = useCallback(async () => {
         console.log(catalogueId);
         if(catalogueId) {
-            const result = await productCatalogueService.getProductCatalogueById(catalogueId);
+            const result = await ProductCatalogueService.getProductCatalogueById(catalogueId);
             console.log(result);
             setProductCatalogue(result.data.payload.product);
         }

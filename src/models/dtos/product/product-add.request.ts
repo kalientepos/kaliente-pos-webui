@@ -1,6 +1,6 @@
 export interface ProductAddRequestDto {
     title: string;
-	description: string;
+	description?: string;
 	price: number;
-	catalogueId: string;
+	catalogueId?: string;
 }
