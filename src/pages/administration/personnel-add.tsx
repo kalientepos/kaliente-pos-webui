@@ -5,9 +5,12 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../components/page/page";
 import AdministrationService from "../../services/administration-service";
+import { registerPersonnel } from "../../store/slices/administration/administration-thunk";
+import { register } from "../../store/slices/auth/auth-slice";
 
 interface RegisterPersonnelForm {
     email: '',
@@ -18,10 +21,10 @@ function PersonnelAdd() {
 
     const {personnelId} = useParams();
     
-    const adminService = new AdministrationService();
 
     const toast = useRef<any>(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     
     const formik = useFormik({
         initialValues: {
@@ -48,16 +51,20 @@ function PersonnelAdd() {
             return errors;
         },
         onSubmit: async (data) => {
-            const response = await adminService.registerPersonnel({email: data.email, password: data.password});
-            if(response === undefined) {
-                toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
+
+            const response = await Promise.resolve(dispatch(registerPersonnel(data))) as any;
+            console.log(response);
+
+
+            if(response === null) {
+                toast.current.show({severity:'error', summary: 'Error', detail: 'There has been a problem handling the request.',  life: 3000});
             }
-            if(response.status !== 200) {
-                toast.current.show({severity:'error', summary: response.data.message, life: 3000});
-            } else {
+            if(response.status === 200) {
                 console.warn(response.data.registeredPersonnelEmail);
-                toast.current.show({severity: 'success', summary: `Admin ${response.data.payload.registeredPersonnelEmail} has been successfully registered!`});
+                toast.current.show({severity: 'success', summary: `Personnel ${response.registeredPersonnelEmail} has been successfully registered!`});
                 navigate('/');
+            } else {
+                toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
             }
 
             formik.resetForm();

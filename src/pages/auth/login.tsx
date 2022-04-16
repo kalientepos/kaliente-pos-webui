@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 
 import {login} from '../../store/slices/auth/auth-slice';
 import AuthService from '../../services/auth-service';
@@ -17,6 +17,7 @@ import './login.scss';
 import Page from '../../components/page/page';
 import { loginWithCredentials } from '../../store/slices/auth/auth-thunk';
 import { AuthenticationRequestDto } from '../../models/dtos/auth/authentication.request';
+import { getRequestStatusFlags } from '@reduxjs/toolkit/dist/query/core/apiState';
 
 interface LoginForm {
     email: string;
@@ -55,28 +56,15 @@ function Login() {
             return errors;
         },
         onSubmit: async (data) => {
-            // const result = await AuthService.authenticate({email: data.email, password: data.password});
-
-            // if(result === undefined) {
-            //     toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
-            // }
-            // if(result.status !== 200) {
-            //     toast.current.show({severity:'error', summary: result.data.message, life: 3000});
-            // } else {
-            //     const response: any = result.data.payload;
-            //     const tokenData: any = jwtDecode(response.jwt);
-
-            //     dispatch(login({email: tokenData.sub, token: response.jwt, role: tokenData.scopes}));
-            //     navigate('/');
-            // }
 
             const request: AuthenticationRequestDto = { email: data.email, password: data.password };
-            dispatch(loginWithCredentials(request));
+            
+            dispatch(loginWithCredentials(request))
+            .then(success => navigate('/'));
 
             formik.resetForm();
         }
     });
-
 
     return (
         <Page showDrawer>

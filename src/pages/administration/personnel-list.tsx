@@ -2,15 +2,29 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Page from "../../components/page/page";
 import AdministrationService from "../../services/administration-service";
+import { useAppSelector } from "../../store";
+import { removePersonnelsFromPage } from "../../store/slices/administration/administration-slice";
+import { getAllPersonnel } from "../../store/slices/administration/administration-thunk";
 
 function PersonnelList() {
-    const adminService = new AdministrationService();
-    const [isLoadingPersonnel, setLoadingPersonnel] = useState(false);
-    const [personnelList, setPersonnelList] = useState([]);
+    //#region [Hooks]
+    const personnelList = useAppSelector(state => state.administration.personnelList);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    
+    useEffect(() => {
+        dispatch(getAllPersonnel());
+
+        return () => {
+            dispatch(removePersonnelsFromPage());
+        }
+    }, []);
+    //#endregion
 
     const operationsBody = (rowData: any) => (
         <div>
@@ -20,22 +34,14 @@ function PersonnelList() {
         </div>
     );
 
-    const fetchPersonnelList = useCallback(async () => {
-        const response = await adminService.getPersonnelList();
-        console.log(response);
-        setPersonnelList(response.data.payload['foundPersonnel']);
-    }, []);
-
-    useEffect(() => {
-        fetchPersonnelList();
-    }, []);
     
     return (
         <Page>
             <Page showDrawer contentClasses="align-items-stretch justify-content-center ml-3 mr-3">
             <p className="mt-3 mb-3 text-center text-2xl text-primary font-bold">Personnel</p>
+            {personnelList.isLoading ? <p>Loading...</p> : <br/>}
             <Button className="mb-3 p-button-success w-full" label="Register New Personnel" onClick={() => navigate('./add')} />
-            <DataTable value={personnelList} rows={personnelList.length} responsiveLayout="scroll">
+            <DataTable value={personnelList.personnel} rows={personnelList.personnel.length} responsiveLayout="scroll">
                 <Column field="email" header="Email"/>
                 <Column field="firstName" header="First Name"/>
                 <Column field="lastName" header="Last Name"/>

@@ -4,9 +4,13 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Page from "../../components/page/page";
+import { ProductDto } from "../../models/dtos/product/product.dto";
 import ProductCatalogueService from "../../services/product-catalogue-service";
+import { createProductCatalogue, getProductCatalogueById, updateProductCatalogue } from "../../store/slices/product-catalogues/prod-catalogues-thunk";
+import { getProductById } from "../../store/slices/products/products-thunk";
 
 interface ProductCatalogueCreateForm {
     title: string;
@@ -20,6 +24,8 @@ function ProductCatalogueAdd() {
         title: '',
         description: ''
     });
+
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -39,64 +45,29 @@ function ProductCatalogueAdd() {
         },
         onSubmit: async(data) => {
             if(catalogueId) {
-                try {
-                    const result = await ProductCatalogueService.updateProductCatalogue({
-                        id: productCatalogue.id,
-                        title: data.title,
-                        description: data.description
-                    });
-
-                    console.warn(result);
-
-                    const response = result.data.payload as any;
-
-                    if(result === undefined) {
-                        toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
-                    }
-                    if(result.status !== 200) {
-                        toast.current.show({severity:'error', summary: result.data.message, life: 3000});
-                    } 
-                    else {
-                        toast.current.show({severity: 'success', summary: `Product Catalogue (${response['addedCatalogueId']}) Updated`, life: 3000});
-                        navigate('./../../');
-                    }
-                } catch(ex: any) {
-                    console.warn(ex.response);
-                    toast.current.show({severity: 'error', summary: `${ex.response.data.message}`, life: 3000});
-                }
-                
+                dispatch(updateProductCatalogue(data));
             } else {
-                const response = await ProductCatalogueService.addProductCatalogue({
-                    title: data.title,
-                    description: data.description
-                });
-                
-
-                if(response === undefined) {
-                    toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
-                }
-                if(response.status !== 200) {
-                    toast.current.show({severity:'error', summary: response.data.message, life: 3000});
-                } 
-                else {
-                    toast.current.show({severity: 'success', summary: `Product Catalogue "${data.title}" Created`, life: 3000})
-                }
+                dispatch(createProductCatalogue(data));
             }
         }
     });
 
-    const getProductCatalogueDetails = useCallback(async () => {
-        console.log(catalogueId);
-        if(catalogueId) {
-            const result = await ProductCatalogueService.getProductCatalogueById(catalogueId);
-            console.log(result);
-            setProductCatalogue(result.data.payload.product);
-        }
-
-    }, []);
-
     useEffect(() => {
-        getProductCatalogueDetails();
+        async function fetchById() {
+            if(catalogueId) {
+                const response = await dispatch(getProductCatalogueById(catalogueId)) as any;
+                
+                if(response)
+                    setProductCatalogue(response.payload.product);
+            }
+            
+        }
+        
+        fetchById();
+        return () => {
+
+        };
+        
     }, []);
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import { ProductDto } from "./product.dto";
 
-export interface GetProductsRequestDto {
+export interface GetProductsResponseDto {
     foundProducts: Array<ProductDto>;
 }

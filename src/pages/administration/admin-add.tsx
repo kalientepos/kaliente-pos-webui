@@ -16,7 +16,6 @@ interface RegisterAdminForm {
 
 const AdminAdd: React.FC = () => {
 
-    const adminService = new AdministrationService();
 
     const toast = useRef<any>(null);
     const navigate = useNavigate();
@@ -46,7 +45,7 @@ const AdminAdd: React.FC = () => {
             return errors;
         },
         onSubmit: async (data) => {
-            const response = await adminService.registerAdmin({email: data.email, password: data.password});
+            const response = await AdministrationService.registerAdmin({email: data.email, password: data.password});
             if(response === undefined) {
                 toast.current.show({severity:'error', summary: 'Timeout Error', detail: 'Server has failed to respond in time.',  life: 3000});
             }

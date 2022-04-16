@@ -3,7 +3,7 @@ import { baseApiUrl } from "../models/constants";
 import { AuthenticationRequestDto } from "../models/dtos/auth/authentication.request";
 import getClient from './clients/http-client';
 
-class AdministrationService {
+const AdministrationService = {
 
     async getPersonnelList() {
         try {
@@ -12,7 +12,7 @@ class AdministrationService {
         } catch (err: any) {
             return err.response;
         }
-    }
+    },
 
     async registerAdmin(registerAdminDto: any) {
         try {
@@ -21,7 +21,7 @@ class AdministrationService {
         } catch (err: any) {
             return err.response;
         }
-    }
+    },
 
     async registerPersonnel(registerPersonnelDto: any) {
         try {
@@ -30,7 +30,7 @@ class AdministrationService {
         } catch (err: any) {
             return err.response;
         }
-    }
+    },
 
 
 }

@@ -1,24 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import productsThunkBuilder from "./products-thunk";
+import productsThunkBuilder, { ProductsPageState } from "./products-thunk";
 
-const initialState = { products: [], isLoading: false, errorMsg: null };
+export interface ProductSliceState {
+    productsPage: ProductsPageState;
+}
+
+const initialState: ProductSliceState = { 
+    productsPage: { products: [], isLoading: false, errorMsg: null }
+};
 
 const productsSlice = createSlice({
     name: 'Products',
     initialState,
     reducers: {
-        loadProducts(state, action) {
-
-        },
-        loadProductsByPage(state, action) {
-
-        },
         clearProducts(state) {
-            state.products = [];
+            state.productsPage.isLoading = false;
+            state.productsPage.products = [];
+            state.productsPage.errorMsg = null;
         }
     },
     extraReducers: (builder) => productsThunkBuilder(builder)
 });
 
-export const {loadProducts, loadProductsByPage, clearProducts} = productsSlice.actions;
+export const {clearProducts} = productsSlice.actions;
 export default productsSlice.reducer;
