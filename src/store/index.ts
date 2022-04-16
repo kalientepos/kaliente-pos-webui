@@ -6,12 +6,16 @@ import modalSlice from "./slices/modal-slice";
 
 import thunk from "redux-thunk";
 import administrationSlice from "./slices/administration/administration-slice";
+import prodCataloguesSlice from "./slices/product-catalogues/prod-catalogues-slice";
+import productsSlice from "./slices/products/products-slice";
 
 
 export const store = configureStore({
     reducer: {
         auth: authSlice,
         administration: administrationSlice,
+        product: productsSlice,
+        productCatalogue: prodCataloguesSlice,
         modal: modalSlice
     },
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),

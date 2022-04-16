@@ -15,7 +15,7 @@ import ProductCatalogueDetails from './pages/product-catalogue/product-catalogue
 import Product from "./pages/product";
 import ProductCatalogue from "./pages/product-catalogue";
 import RequireAuthorization from "./components/require-authorization";
-import Administration from "./pages/administration";
+import Administration from "./pages/administration/_index";
 import PersonnelList from "./pages/administration/personnel-list";
 import PersonnelAdd from "./pages/administration/personnel-add";
 import AdminAdd from "./pages/administration/admin-add";

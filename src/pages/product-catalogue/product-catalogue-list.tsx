@@ -3,13 +3,17 @@ import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Page from "../../components/page/page";
 import ProductCatalogueService from "../../services/product-catalogue-service";
+import { useAppSelector } from "../../store";
+import { clearProductCatalogues } from "../../store/slices/product-catalogues/prod-catalogues-slice";
+import { getAllProductCatalogues } from "../../store/slices/product-catalogues/prod-catalogues-thunk";
 
 function ProductCatalogueList() {
-    const [isLoadingCatalogues, setLoadingCatalogues] = useState(false);
-    const [productCatalogues, setProductCatalogues] = useState([]);
+    const productCatalogues = useAppSelector(state => state.productCatalogue.productCatalogues);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const operationsBody = (rowData: any) => (
@@ -20,14 +24,13 @@ function ProductCatalogueList() {
         </div>
     );
 
-    const fetchCatalogues = useCallback(async () => {
-        const response = await ProductCatalogueService.getProductCatalogues();
-        console.log(response);
-        setProductCatalogues(response.data.payload.productCatalogues);
-    }, []);
+    
 
     useEffect(() => {
-        fetchCatalogues();
+        dispatch(getAllProductCatalogues());
+
+        return () => { dispatch(clearProductCatalogues()); }
+
     }, []);
 
 

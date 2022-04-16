@@ -9,12 +9,18 @@ const productCataloguesSlice = createSlice({
     reducers: {
         loadProductCatalogues(state, action) {
             state.productCatalogues = action.payload;
+            state.isLoading = false;
+            state.errorMsg = null;
         },
         loadProductCataloguesByPage(state, action) {
             state.productCatalogues = action.payload;
+            state.isLoading = false;
+            state.errorMsg = null;
         },
         clearProductCatalogues(state) {
             state.productCatalogues = [];
+            state.isLoading = false;
+            state.errorMsg = null;
         }
     },
     extraReducers: (builder) => productCataloguesThunkBuilder(builder)

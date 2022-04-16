@@ -59,10 +59,11 @@ const productsThunkBuilder = (builder: ActionReducerMapBuilder<any>) => {
         state.productCatalogues = [];
     });
 
-    builder.addCase(getAllProductCatalogues.fulfilled, (state: any) => {
+    builder.addCase(getAllProductCatalogues.fulfilled, (state: any, {payload}) => {
         console.log('[GetAllProducts] FULFILLED...');
         state.isLoading = false;
         state.errorMsg = null;
+        state.productCatalogues = payload.productCatalogues;
     });
 
     builder.addCase(getAllProductCatalogues.rejected, (state: any) => {
