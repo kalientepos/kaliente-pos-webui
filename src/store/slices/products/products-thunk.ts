@@ -1,4 +1,4 @@
-import { ActionCreatorWithPayload, ActionCreatorWithPreparedPayload, ActionReducerMapBuilder, createAsyncThunk } from "@reduxjs/toolkit";
+import { ActionCreatorWithPayload, ActionCreatorWithPreparedPayload, ActionReducerMapBuilder, createAsyncThunk, current } from "@reduxjs/toolkit";
 import { GetProductByIdResponseDto } from "../../../models/dtos/product/get-product-by-id.response";
 import { GetProductsResponseDto } from "../../../models/dtos/product/get-products.response";
 import { ProductAddRequestDto } from "../../../models/dtos/product/product-add.request";
@@ -7,6 +7,7 @@ import { ProductUpdateRequestDto } from "../../../models/dtos/product/product-up
 import { ProductUpdateResponseDto } from "../../../models/dtos/product/product-update-response";
 import { ProductDto } from "../../../models/dtos/product/product.dto";
 import ProductService from "../../../services/product-service";
+import { ProductSliceState } from "./products-slice";
 
 export interface ProductsPageState {
     products: Array<ProductDto>,
@@ -55,8 +56,8 @@ export const updateProduct = createAsyncThunk<ProductUpdateResponseDto, ProductU
         else return thunkAPI.rejectWithValue(apiResponse);
     }
 );
-export const deleteProduct = createAsyncThunk<string, string>(
-    'products/update',
+export const removeProduct = createAsyncThunk<string, string>(
+    'products/remove',
     async(id, thunkAPI) => {
         const apiResponse = await ProductService.deleteProduct(id);
         console.log(apiResponse);
@@ -70,22 +71,35 @@ export const deleteProduct = createAsyncThunk<string, string>(
 //#region [Thunk Builder]
 const productsThunkBuilder = (builder: ActionReducerMapBuilder<any>) => {
     
-    builder.addCase(getAllProducts.pending, (state: ProductsPageState) => {
+    builder.addCase(getAllProducts.pending, (state: ProductSliceState) => {
         console.log('[GetAllProducts] STILL PENDING...');
-        state.isLoading = true;
-        state.products = [];
-        state.errorMsg = null;
+        state.productsPage.isLoading = true;
+        state.productsPage.products = [];
+        state.productsPage.errorMsg = null;
     });
 
-    builder.addCase(getAllProducts.fulfilled, (state: ProductsPageState, {payload}) => {
+    builder.addCase(getAllProducts.fulfilled, (state: ProductSliceState, {payload}) => {
         console.log('[GetAllProducts] FULFILLED...');
-        state.isLoading = false;
-        state.products = payload.foundProducts;
-        state.errorMsg = null;
+        state.productsPage.isLoading = false;
+        state.productsPage.products = payload.products;
+        state.productsPage.errorMsg = null;
     });
 
-    builder.addCase(getAllProducts.rejected, (state: ProductsPageState) => {
+    builder.addCase(getAllProducts.rejected, (state: ProductSliceState) => {
         console.log('[GetAllProducts] FAILED!');
+        state.productsPage.isLoading = false;
+        state.productsPage.errorMsg = null;
+        state.productsPage.products = [];
+    });
+
+    builder.addCase(removeProduct.fulfilled, (state: ProductSliceState, action) => {
+        console.log('[DeleteProduct] FULFILLED!');
+        const payload = action.payload as any;
+        const removedProductId = payload.deletedProductId;
+        const newProductList = state.productsPage.products;
+        newProductList.splice(newProductList.findIndex(p => p.id === removedProductId), 1);
+
+        state.productsPage.products = newProductList;
     });
 
 }

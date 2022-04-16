@@ -17,7 +17,7 @@ const ProductService = {
     },
 
     async addProduct(productAddDto: ProductAddRequestDto) {
-        const response = await getClient().post(`${baseApiUrl}/product/addNewProduct`, productAddDto);
+        const response = await getClient().post(`${baseApiUrl}/product/add`, productAddDto);
         return response;
     },
 
@@ -27,7 +27,7 @@ const ProductService = {
     },
 
     async deleteProduct(id: string) {
-        const response = await getClient().get(`${baseApiUrl}/product/delete/${id}`);
+        const response = await getClient().delete(`${baseApiUrl}/product/delete/${id}`);
         return response;
     }
     
