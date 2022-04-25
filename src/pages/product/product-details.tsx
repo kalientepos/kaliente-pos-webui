@@ -4,9 +4,9 @@ import ProductService from "../../services/product-service";
 
 function ProductDetails() {
     return (
-        <Page showDrawer>
+        <div>
             <p>Product Details</p>
-        </Page>
+        </div>
     )
 };
 

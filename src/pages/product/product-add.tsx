@@ -1,7 +1,5 @@
+import { Button, Card } from "@mui/material";
 import { FormikErrors, useFormik } from "formik";
-import { Button } from "primereact/button";
-import { Card } from "primereact/card";
-import { InputText } from "primereact/inputtext";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -85,12 +83,12 @@ function ProductAdd() {
 
     //#region [Render]
     return (
-        <Page showDrawer>
+        <div>
             <Card>
                 <form className="p-fluid" onSubmit={formik.handleSubmit}>
                     <div className="field pb-3">
                         <span className="p-float-label">
-                            <InputText id="title" name="title" value={formik.values.title} onChange={formik.handleChange} autoFocus />
+                            <input id="title" name="title" value={formik.values.title} onChange={formik.handleChange} autoFocus />
                             <label htmlFor="title">Title</label>
                         </span>
                         {
@@ -99,7 +97,7 @@ function ProductAdd() {
                     </div>
                     <div className="field pb-3">
                         <span className="p-float-label">
-                            <InputText id="description" name="description" value={formik.values.description} onChange={formik.handleChange} autoFocus />
+                            <input id="description" name="description" value={formik.values.description} onChange={formik.handleChange} autoFocus />
                             <label htmlFor="description">Description</label>
                         </span>
                         {
@@ -108,17 +106,17 @@ function ProductAdd() {
                     </div>
                     <div className="field pb-3">
                         <span className="p-float-label">
-                            <InputText id="price" name="price" type="number" value={formik.values.price} onChange={formik.handleChange} autoFocus />
+                            <input id="price" name="price" type="number" value={formik.values.price} onChange={formik.handleChange} autoFocus />
                             <label htmlFor="price">Price</label>
                         </span>
                         {
                             (formik.errors.description && formik.touched.price )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.price}</p>
                         }
                     </div>
-                    <Button type="submit" label="Submit" className="mt-2 font-open-sans" disabled={formik.isSubmitting} loading={formik.isSubmitting}/>
+                    <Button>Submit</Button>
                 </form>
             </Card>
-        </Page>
+        </div>
     )
     //#endregion
 };

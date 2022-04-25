@@ -1,9 +1,7 @@
+import { Button, Card } from "@mui/material";
 import { FormikErrors, useFormik } from "formik";
-import { Button } from "primereact/button";
-import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Page from "../../components/page/page";
@@ -61,13 +59,13 @@ const AdminAdd: React.FC = () => {
     });
 
     return (
-        <Page classes='flex flex-column'>
+        <div>
                 <p className='text-center text-primary text-4xl font-bold m-3 justify-content-start'>RegisterAdmin</p>
                 <Card className='surface-100 shadow-7 w-6'>
                     <form className='p-fluid' onSubmit={formik.handleSubmit}>
                         <div className="field pb-3">
                             <span className="p-float-label">
-                                <InputText id="email" name="email" value={formik.values.email} onChange={formik.handleChange} autoFocus />
+                                <input id="email" name="email" value={formik.values.email} onChange={formik.handleChange} autoFocus />
                                 <label htmlFor="email">Email</label>
                             </span>
                             {
@@ -77,7 +75,7 @@ const AdminAdd: React.FC = () => {
                         
                         <div className="field pb-3">
                             <span className="p-float-label">
-                                <Password id="password" name="password" value={formik.values.password} onChange={formik.handleChange} />
+                                <input id="password" name="password" value={formik.values.password} onChange={formik.handleChange} />
                                 <label htmlFor="password">Password</label>
                             </span>
                             {
@@ -85,12 +83,11 @@ const AdminAdd: React.FC = () => {
                             }
                         </div>
                         
-                        <Button type="submit" label="Register" className="mt-2 font-open-sans" disabled={formik.isSubmitting} loading={formik.isSubmitting}/>
+                        <Button type="submit" title="Register"/>
                     </form>
                 </Card>
 
-                <Toast ref={toast}/>
-        </Page>
+        </div>
         
     );
 }

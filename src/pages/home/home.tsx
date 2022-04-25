@@ -9,11 +9,7 @@ function Home() {
     }, []);
     
     return (
-        <Page showDrawer>
-            {/* <Button className='ml-3 mr-3' title='Administration' onClick={() => navigate('/administration')}>Administration (WIP)</Button>
-            <Button className='mr-3' title='Product Catalogues' onClick={() => navigate('/product')}>Products</Button>
-            <Button title='Products' onClick={() => navigate('/product-catalogue')}>Product Catalogues</Button> */}
-        </Page>
+        <p>a</p>
     );
 }
 

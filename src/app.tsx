@@ -20,6 +20,7 @@ import PersonnelList from "./pages/administration/personnel-list";
 import PersonnelAdd from "./pages/administration/personnel-add";
 import AdminAdd from "./pages/administration/admin-add";
 import AdminList from "./pages/administration/admin-list";
+import Page from "./components/page/page";
 //
 
 
@@ -29,39 +30,41 @@ function App() {
         <Route path="*" element={<Error/>}/>
         <Route path="login" element={<Login/>} />
         <Route path="register" element={<Register/>} />
-        <Route path="" element={
-          <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
-            <Home/>
-          </RequireAuthorization>}
-        />
-        <Route path="product" element={
-          <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
-            <Product/>
+        <Route element={<Page/>}>
+
+          <RequireAuthorization>
+            <Route path="" element={<Home/>}/>
           </RequireAuthorization>
-        }>
-          <Route path="" element={<ProductList/>} />
-          <Route path=":id" element={<ProductDetails/>} />
-          <Route path="add" element={<ProductAdd/>} />
-          <Route path="update/:productId" element={<ProductAdd/>} />
-        </Route>
-        <Route 
-          path="product-catalogue" element={
+
+          <Route path="product" element={
             <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
-              <ProductCatalogue/>
+              <Product/>
             </RequireAuthorization>
-        }>
-          <Route path="" element={<ProductCatalogueList/>}/>
-          <Route path=":id" element={<ProductCatalogueDetails/>}/>
-          <Route path="add" element={<ProductCatalogueAdd/>}/>
-          <Route path="update/:catalogueId" element={<ProductCatalogueAdd/>} />
-        </Route>
-        <Route path="administration" element={
-          <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
-            <Administration/>
-          </RequireAuthorization>
-        }>
+          }>
+            <Route path="" element={<ProductList/>} />
+            <Route path=":id" element={<ProductDetails/>} />
+            <Route path="add" element={<ProductAdd/>} />
+            <Route path="update/:productId" element={<ProductAdd/>} />
+          </Route>
+          <Route 
+            path="product-catalogue" element={
+              <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
+                <ProductCatalogue/>
+              </RequireAuthorization>
+          }>
+            <Route path="" element={<ProductCatalogueList/>}/>
+            <Route path=":id" element={<ProductCatalogueDetails/>}/>
+            <Route path="add" element={<ProductCatalogueAdd/>}/>
+            <Route path="update/:catalogueId" element={<ProductCatalogueAdd/>} />
+          </Route>
+          <Route path="administration" element={
+            <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN']}>
+              <Administration/>
+            </RequireAuthorization>
+          }>
           <Route path="" element={<PersonnelList/>}/>
-          <Route path="add" element={<PersonnelAdd/>}/>
+            <Route path="add" element={<PersonnelAdd/>}/>
+          </Route>
         </Route>
       </Routes>
   );

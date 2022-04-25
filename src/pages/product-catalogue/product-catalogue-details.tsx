@@ -4,9 +4,9 @@ import ProductCatalogueService from "../../services/product-catalogue-service";
 
 function ProductCatalogueDetails() {
     return (
-        <Page showDrawer>
+        <div>
             <p>Product Catalogue Details</p>
-        </Page>
+        </div>
     )
 };
 

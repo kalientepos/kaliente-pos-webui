@@ -1,8 +1,5 @@
+import { Button, Card } from "@mui/material";
 import { FormikErrors, useFormik, useFormikContext } from "formik";
-import { Button } from "primereact/button";
-import { Card } from "primereact/card";
-import { InputText } from "primereact/inputtext";
-import { Toast } from "primereact/toast";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -79,12 +76,12 @@ function ProductCatalogueAdd() {
     }, [productCatalogue]);
 
     return (
-        <Page showDrawer>
+        <div>
             <Card>
                 <form className="p-fluid" onSubmit={formik.handleSubmit}>
                     <div className="field pb-3">
                         <span className="p-float-label">
-                            <InputText id="title" name="title" value={formik.values.title} onChange={formik.handleChange} autoFocus />
+                            <input id="title" name="title" value={formik.values.title} onChange={formik.handleChange} autoFocus />
                             <label htmlFor="title">Title</label>
                         </span>
                         {
@@ -93,18 +90,17 @@ function ProductCatalogueAdd() {
                     </div>
                     <div className="field pb-3">
                         <span className="p-float-label">
-                            <InputText id="description" name="description" value={formik.values.description} onChange={formik.handleChange} autoFocus />
+                            <input id="description" name="description" value={formik.values.description} onChange={formik.handleChange} autoFocus />
                             <label htmlFor="description">Description</label>
                         </span>
                         {
                             (formik.errors.description && formik.touched.description )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.description}</p>
                         }
                     </div>
-                    <Button type="submit" label="Submit" className="mt-2 font-open-sans" disabled={formik.isSubmitting} loading={formik.isSubmitting}/>
+                    <Button />
                 </form>
             </Card>
-            <Toast ref={toast}/>
-        </Page>
+        </div>
     )
 };
 
