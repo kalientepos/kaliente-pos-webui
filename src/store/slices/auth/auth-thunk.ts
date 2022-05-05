@@ -11,7 +11,7 @@ export const loginWithCredentials = createAsyncThunk<AuthenticationResponseDto, 
     'auth/login',
     async(loginDto, thunkAPI) => {
         const response = await AuthService.authenticate(loginDto);
-        console.warn(response)
+        console.warn(response.data.payload)
         if(response.data.payload) {
             console.log(jwtDecode(response.data.payload['jwt']));
             return response.data.payload as AuthenticationResponseDto;

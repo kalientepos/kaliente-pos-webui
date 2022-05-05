@@ -9,6 +9,7 @@ import administrationSlice from "./slices/administration/administration-slice";
 import prodCataloguesSlice from "./slices/product-catalogues/prod-catalogues-slice";
 import productsSlice from "./slices/products/products-slice";
 import appSlice from "./slices/app-slice";
+import { kalienteApi } from "./slices/api/api-slice";
 
 
 export const store = configureStore({
@@ -18,9 +19,11 @@ export const store = configureStore({
         administration: administrationSlice,
         product: productsSlice,
         productCatalogue: prodCataloguesSlice,
-        modal: modalSlice
+        modal: modalSlice,
+        kalienteApi: kalienteApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk).concat(kalienteApi.middleware),
+    
 });
 
 setupListeners(store.dispatch);

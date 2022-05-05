@@ -1,5 +1,5 @@
 import React from "react";
-import Page from "../../components/page/page";
+import AppPage from "../../components/page/page";
 import ProductCatalogueService from "../../services/product-catalogue-service";
 
 function ProductCatalogueDetails() {

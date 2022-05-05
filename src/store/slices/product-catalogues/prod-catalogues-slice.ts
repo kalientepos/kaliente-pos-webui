@@ -6,12 +6,16 @@ export interface ProductCataloguePageState {
     productCatalogues: Array<ProductCatalogueDto>;
     isLoading: boolean;
     errorMsg: string | null;
+    removeDialog: {
+        isOpen: boolean;
+        catalogueIdToRemove: string | null;
+    }
 }
 
-const initialState: ProductCataloguePageState = { productCatalogues: [], isLoading: false, errorMsg: null };
+const initialState: ProductCataloguePageState = { productCatalogues: [], isLoading: false, errorMsg: null, removeDialog: { isOpen: false, catalogueIdToRemove: null } };
 
 const productCataloguesSlice = createSlice({
-    name: 'Products',
+    name: 'ProductCatalogues',
     initialState,
     reducers: {
         loadProductCatalogues(state, action) {
@@ -29,10 +33,16 @@ const productCataloguesSlice = createSlice({
             state.productCatalogues = [];
             state.isLoading = false;
             state.errorMsg = null;
+        },
+        showRemoveDialog(state, action) {
+            state.removeDialog = { isOpen: true, catalogueIdToRemove: action.payload };
+        },
+        hideRemoveDialog(state) {
+            state.removeDialog = { isOpen: false, catalogueIdToRemove: null };
         }
     },
     extraReducers: (builder) => productCataloguesThunkBuilder(builder)
 });
 
-export const {loadProductCatalogues, loadProductCataloguesByPage, clearProductCatalogues} = productCataloguesSlice.actions;
+export const {loadProductCatalogues, loadProductCataloguesByPage, clearProductCatalogues, showRemoveDialog, hideRemoveDialog } = productCataloguesSlice.actions;
 export default productCataloguesSlice.reducer;

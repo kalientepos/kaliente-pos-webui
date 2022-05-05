@@ -20,7 +20,6 @@ export const getAllProducts = createAsyncThunk<GetProductsResponseDto>(
     'products/getAll',
     async() => {
         const apiResponse = await ProductService.getProducts();
-        console.log(apiResponse);
         if(apiResponse)
             return apiResponse.data.payload;
         else return apiResponse;
@@ -30,10 +29,11 @@ export const getProductById = createAsyncThunk<GetProductByIdResponseDto, string
     'products/getById',
     async(id, thunkAPI) => {
         const apiResponse = await ProductService.getProductById(id);
-        console.log(apiResponse);
-        if(apiResponse)
+        const payload = apiResponse.data.payload;
+        console.error(payload.foundProduct);
+        if(apiResponse && payload.foundProduct !== null)
             return apiResponse.data.payload;
-        else return apiResponse;
+        else return thunkAPI.rejectWithValue(apiResponse);
     }
 );
 export const createProduct = createAsyncThunk<ProductAddResponseDto, ProductAddRequestDto>(

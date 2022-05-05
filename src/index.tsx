@@ -2,7 +2,6 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import ReactDOM from 'react-dom';
 
-import PrimeReact from 'primereact/api';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 // import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
@@ -14,8 +13,6 @@ import "primeicons/primeicons.css";                                       //icon
 import './index.scss';
 import App from './app';
 import { BrowserRouter } from 'react-router-dom';
-//
-PrimeReact.ripple = true;
 
 const container = document.getElementById('root');
 const app = createRoot(container!);
@@ -23,7 +20,7 @@ app.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App/>
+        <App />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

@@ -12,15 +12,15 @@ import AuthService from "../../../services/auth-service";
 import { AdministationState } from "./administration-slice";
 
 //#region [Thunks]
-export const getAllPersonnel = createAsyncThunk<GetPersonnelListResponseDto>(
+export const getAllPersonnel = createAsyncThunk<GetPersonnelListResponseDto, any>(
     'admin/personnelList',
-    async() => {
+    async (thunkAPI) => {
         const response = await AuthService.getPersonnelList();
-        if(response.data.payload) {
+        if (response.data.payload) {
             console.log(response);
             return response.data.payload as GetPersonnelListResponseDto;
         }
-        else return response;
+        else return thunkAPI.rejectWithValue(response);
     }
 );
 export const registerAdmin = createAsyncThunk<RegisterAdminResponseDto, RegisterAdminRequestDto>(

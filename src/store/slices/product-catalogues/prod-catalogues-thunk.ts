@@ -1,4 +1,5 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from "@reduxjs/toolkit";
+import BaseResponse from "../../../models/dtos/base-response";
 import { GetAllProductCataloguesResponseDto } from "../../../models/dtos/product-catalogue/get-all-product-catalogues.response";
 import { GetProductCatalogueByIdResponseDto } from "../../../models/dtos/product-catalogue/get-product-catalogue-by-id.response";
 import { ProductCatalogueAddRequestDto } from "../../../models/dtos/product-catalogue/product-catalogue-add.request";
@@ -11,7 +12,7 @@ import { ProductCataloguePageState } from "./prod-catalogues-slice";
 //#region [Thunks]
 export const getAllProductCatalogues = createAsyncThunk<GetAllProductCataloguesResponseDto>(
     'product-catalogues/getAll',
-    async(thunkAPI) => {
+    async (thunkAPI) => {
         const apiResponse = await ProductCatalogueService.getProductCatalogues();
         console.log(apiResponse);
         if(apiResponse)

@@ -1,11 +1,17 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { baseApiUrl } from "../models/constants";
+import { GetPersonnelListResponseDto } from "../models/dtos/administration/get-personnel-list.response";
+import { RegisterAdminResponseDto } from "../models/dtos/administration/register-admin.response";
+import { RegisterPersonnelResponseDto } from "../models/dtos/administration/register-personnel.response";
 import { AuthenticationRequestDto } from "../models/dtos/auth/authentication.request";
+import BaseResponse from "../models/dtos/base-response";
 import getClient from './clients/http-client';
+
+type ApiResponse<T> = AxiosResponse<BaseResponse<T>>;
 
 const AdministrationService = {
 
-    async getPersonnelList() {
+    async getPersonnelList(): Promise<ApiResponse<GetPersonnelListResponseDto>>  {
         try {
             const response = await getClient().get(`${baseApiUrl}/auth/getPersonnelList`);
             return response;
@@ -14,7 +20,7 @@ const AdministrationService = {
         }
     },
 
-    async registerAdmin(registerAdminDto: any) {
+    async registerAdmin(registerAdminDto: any): Promise<ApiResponse<RegisterAdminResponseDto>> {
         try {
             const response = await getClient().post(`${baseApiUrl}/auth/registerAdmin`, registerAdminDto);
             return response;
@@ -23,7 +29,7 @@ const AdministrationService = {
         }
     },
 
-    async registerPersonnel(registerPersonnelDto: any) {
+    async registerPersonnel(registerPersonnelDto: any): Promise<ApiResponse<RegisterPersonnelResponseDto>> {
         try {
             const response = await getClient().post(`${baseApiUrl}/auth/registerPersonnel`, registerPersonnelDto);
             return response;

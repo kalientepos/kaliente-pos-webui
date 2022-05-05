@@ -4,7 +4,7 @@ import { DataTable } from "primereact/datatable";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Page from "../../components/page/page";
+import AppPage from "../../components/page/page";
 import ProductService from "../../services/product-service";
 import { useAppSelector } from "../../store";
 import { clearProducts } from "../../store/slices/products/products-slice";

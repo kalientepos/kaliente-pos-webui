@@ -6,7 +6,7 @@ import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Page from "../../components/page/page";
+import AppPage from "../../components/page/page";
 import AdministrationService from "../../services/administration-service";
 import { registerPersonnel } from "../../store/slices/administration/administration-thunk";
 import { register } from "../../store/slices/auth/auth-slice";

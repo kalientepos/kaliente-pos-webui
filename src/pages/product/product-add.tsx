@@ -1,10 +1,14 @@
 import { Button, Card } from "@mui/material";
+import { AsyncThunk, AsyncThunkAction } from "@reduxjs/toolkit";
 import { FormikErrors, useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Page from "../../components/page/page";
+import AppPage from "../../components/page/page";
+import BaseResponse from "../../models/dtos/base-response";
+import { GetProductByIdResponseDto } from "../../models/dtos/product/get-product-by-id.response";
 import ProductService from "../../services/product-service";
+import { useAppDispatch } from "../../store";
 import { createProduct, getProductById, updateProduct } from "../../store/slices/products/products-thunk";
 
 interface ProductCreateForm {
@@ -23,7 +27,7 @@ function ProductAdd() {
         price: 0.0
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
 
@@ -46,6 +50,7 @@ function ProductAdd() {
             return errors;
         },
         onSubmit: async(data) => {
+            console.log(data);
             if(productId) {
                 dispatch(updateProduct(data));
             } else {
@@ -57,15 +62,18 @@ function ProductAdd() {
     useEffect(() => {
         async function fetchById() {
             if(productId) {
-                const response = await dispatch(getProductById(productId)) as any;
+                const response = await dispatch(getProductById(productId));
+                console.warn(response);
                 
-                if(response)
-                    setProduct(response.payload.product);
+                if(response && response.meta.requestStatus !== 'rejected')
+                    setProduct(response.payload as any);
+                else console.warn('This product does not exist.');
             }
             
         }
         
         fetchById();
+        
         return () => {
 
         };
@@ -113,7 +121,7 @@ function ProductAdd() {
                             (formik.errors.description && formik.touched.price )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.price}</p>
                         }
                     </div>
-                    <Button>Submit</Button>
+                    <Button type="submit">Submit</Button>
                 </form>
             </Card>
         </div>

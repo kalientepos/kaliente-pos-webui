@@ -5,7 +5,7 @@ import { DataTable } from "primereact/datatable";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Page from "../../components/page/page";
+import AppPage from "../../components/page/page";
 import AdministrationService from "../../services/administration-service";
 import { useAppSelector } from "../../store";
 import { removePersonnelsFromPage } from "../../store/slices/administration/administration-slice";
@@ -19,7 +19,7 @@ function PersonnelList() {
 
     
     useEffect(() => {
-        dispatch(getAllPersonnel());
+        dispatch(getAllPersonnel(null));
 
         return () => {
             dispatch(removePersonnelsFromPage());

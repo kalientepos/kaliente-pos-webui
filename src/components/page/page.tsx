@@ -21,18 +21,18 @@ const drawerItems = [
     }
 ];
 
-const Page: React.FC<PageProps> = () => {
+const AppPage: React.FC<PageProps> = () => {
     return (
-        <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppHeader/>
-      <AppDrawer items={drawerItems}/>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        <Outlet/>
-      </Box>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppHeader/>
+        <AppDrawer items={drawerItems}/>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Toolbar />
+          <Outlet/>
+        </Box>
     </Box>
     );
 };
 
-export default Page;
+export default AppPage;

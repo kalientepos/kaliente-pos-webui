@@ -1,5 +1,5 @@
 import React from "react";
-import Page from "../../components/page/page";
+import AppPage from "../../components/page/page";
 import ProductService from "../../services/product-service";
 
 function ProductDetails() {

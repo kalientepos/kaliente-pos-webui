@@ -23,7 +23,7 @@ function prepareConfig(): AxiosRequestConfig {
 
 
 
-function fetchLocalTokenIfExists() {
+export function fetchLocalTokenIfExists() {
     const tkn = localStorage.getItem('token');
     return tkn;
 }

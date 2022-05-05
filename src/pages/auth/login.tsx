@@ -1,20 +1,14 @@
 import React, { useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
-
-import {login} from '../../store/slices/auth/auth-slice';
-import AuthService from '../../services/auth-service';
 import { useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
-
-import { Toast } from 'primereact/toast';
-
 import { FormikErrors, useFormik } from 'formik';
 import './login.scss';
-import Page from '../../components/page/page';
+import AppPage from '../../components/page/page';
 import { loginWithCredentials } from '../../store/slices/auth/auth-thunk';
 import { AuthenticationRequestDto } from '../../models/dtos/auth/authentication.request';
-import { getRequestStatusFlags } from '@reduxjs/toolkit/dist/query/core/apiState';
-import { Button, Card } from '@mui/material';
+import { Box, Container, Paper, Stack, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import SaveIcon from '@mui/icons-material/Save';
 
 interface LoginForm {
     email: string;
@@ -57,39 +51,28 @@ function Login() {
             const request: AuthenticationRequestDto = { email: data.email, password: data.password };
             
             dispatch(loginWithCredentials(request))
-            .then(success => navigate('/'));
+            .then(success => navigate('/'))
+            .catch();
 
-            formik.resetForm();
         }
     });
 
     return (
-        <div>
-                <p className='text-center text-primary text-4xl font-bold m-3'>Kaliente POS Backoffice</p>
-                <Card className='w-6'>
-                    <form className='p-fluid' onSubmit={formik.handleSubmit}>
-                        <div className="field pb-3">
-                            <span className="p-float-label">
-                                <input id="email" name="email" value={formik.values.email} onChange={formik.handleChange} autoFocus />
-                                <label htmlFor="email">Email</label>
-                            </span>
-                            {
-                                (formik.errors.email && formik.touched.email )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.email}</p>
-                            }
-                        </div>
-                        <div className="field pb-3">
-                            <span className="p-float-label">
-                                <input id="password" name="password" value={formik.values.password} onChange={formik.handleChange} />
-                                <label htmlFor="password">Password</label>
-                            </span>
-                            {
-                                (formik.errors.password && formik.touched.password )  && <p className='text-xs text-pink-400 pt-2 pb-2'>{formik.errors.password}</p>
-                            }
-                        </div>
-                        <Button type="submit" title="Submit" />
+        <Paper elevation={0}>
+            <Container fixed>
+                <Box mt={2} />
+                <Paper sx={{ p: 2 }} elevation={1}>
+                    <Typography variant="h5" align="center">Login</Typography>
+                    <form onSubmit={formik.handleSubmit}>
+                        <Stack direction="column" spacing={2}>
+                            <TextField id="email" label="Email" variant="standard" value={formik.values.email} onChange={formik.handleChange} error={formik.touched.email && Boolean(formik.errors.email)} helperText={formik.touched.email && formik.errors.email} />
+                            <TextField id="password" label="Password" variant="standard" type="password" value={formik.values.password} onChange={formik.handleChange} error={formik.touched.password && Boolean(formik.errors.password)} helperText={formik.touched.password && formik.errors.password} />
+                            <LoadingButton startIcon={<SaveIcon/>} loading={formik.isSubmitting} variant="contained" type="submit">Submit</LoadingButton>
+                        </Stack>
                     </form>
-                </Card>
-        </div>
+                </Paper>
+            </Container>
+        </Paper>
     );
 }
 

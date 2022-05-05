@@ -2,7 +2,7 @@
 import { Button } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Page from "../../components/page/page";
+import AppPage from "../../components/page/page";
 
 function Error() {
     const navigate = useNavigate();

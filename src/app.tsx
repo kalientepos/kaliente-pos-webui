@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Error from './pages/error/error';
 import Home from './pages/home/home';
 import Login from './pages/auth/login';
-import Register from './pages/auth/register';
 import ProductList from './pages/product/product-list';
 import ProductAdd from './pages/product/product-add';
 import ProductDetails from './pages/product/product-details';
@@ -20,7 +19,7 @@ import PersonnelList from "./pages/administration/personnel-list";
 import PersonnelAdd from "./pages/administration/personnel-add";
 import AdminAdd from "./pages/administration/admin-add";
 import AdminList from "./pages/administration/admin-list";
-import Page from "./components/page/page";
+import AppPage from "./components/page/page";
 //
 
 
@@ -29,13 +28,8 @@ function App() {
       <Routes>
         <Route path="*" element={<Error/>}/>
         <Route path="login" element={<Login/>} />
-        <Route path="register" element={<Register/>} />
-        <Route element={<Page/>}>
-
-          <RequireAuthorization>
-            <Route path="" element={<Home/>}/>
-          </RequireAuthorization>
-
+        <Route element={<AppPage/>}>
+        <Route path="" element={<RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}><Home /></RequireAuthorization>} />
           <Route path="product" element={
             <RequireAuthorization roles={['ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_PERSONNEL']}>
               <Product/>
