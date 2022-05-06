@@ -13,11 +13,14 @@ import "primeicons/primeicons.css";                                       //icon
 import './index.scss';
 import App from './app';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const container = document.getElementById('root');
 const app = createRoot(container!);
 app.render(
   <React.StrictMode>
+    <ToastContainer />
     <Provider store={store}>
       <BrowserRouter>
         <App />

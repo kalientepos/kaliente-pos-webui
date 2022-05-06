@@ -2,7 +2,6 @@ import { configureStore, Store } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import authSlice from "./slices/auth/auth-slice";
-import modalSlice from "./slices/modal-slice";
 
 import thunk from "redux-thunk";
 import administrationSlice from "./slices/administration/administration-slice";
@@ -19,8 +18,7 @@ export const store = configureStore({
         administration: administrationSlice,
         product: productsSlice,
         productCatalogue: prodCataloguesSlice,
-        modal: modalSlice,
-        kalienteApi: kalienteApi.reducer,
+        [kalienteApi.reducerPath]: kalienteApi.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk).concat(kalienteApi.middleware),
     

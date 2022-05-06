@@ -7,8 +7,9 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useAppDispatch, useAppSelector } from "../../store";
 import { clearProductCatalogues, hideRemoveDialog, showRemoveDialog } from "../../store/slices/product-catalogues/prod-catalogues-slice";
 import { getAllProductCatalogues, removeProductCatalogue } from "../../store/slices/product-catalogues/prod-catalogues-thunk";
+import { toast } from 'react-toastify';
 
-const skeletonArray = Array(10).fill('');
+const skeletonArray = Array(3).fill('');
 
 
 function ProductCatalogueList() {
@@ -30,10 +31,12 @@ function ProductCatalogueList() {
     ];
 
     const confirmRemoveDialog = async () => {
+        const catalogueId = productCatalogueState.removeDialog.catalogueIdToRemove!!;
         const result = await dispatch(
-            removeProductCatalogue(productCatalogueState.removeDialog.catalogueIdToRemove!!)
+            removeProductCatalogue(catalogueId)
         );
-        if(result.type.includes('fulfilled')) {
+        if (result.type.includes('fulfilled')) {
+            toast(`Successfully removed catalogue #${catalogueId}`, { type: 'success' });
             dispatch(hideRemoveDialog());
         }
     };

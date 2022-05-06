@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import Box from '@mui/material/Box';
 import { clearProductCatalogues } from "../../store/slices/product-catalogues/prod-catalogues-slice";
 import SaveIcon from '@mui/icons-material/Save';
+import { toast } from 'react-toastify';
 
 interface ProductCatalogueCreateForm {
     title: string;
@@ -28,8 +29,6 @@ function ProductCatalogueAdd() {
 
     const navigate = useNavigate();
 
-    const toast = useRef<any>(null);
-
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -47,12 +46,18 @@ function ProductCatalogueAdd() {
             if(catalogueId) {
                 const result = await dispatch(updateProductCatalogue(data));
                 if (result.type.includes('fulfilled')) {
+                    toast('Successfully updated existing catalogue!', { type: 'success' });
                     navigate('./../../');
+                } else {
+                    toast(`An error occurred.`, {type: 'error'});
                 }
             } else {
                 const result = await dispatch(createProductCatalogue(data));
                 if (result.type.includes('fulfilled')) {
+                    toast('Successfully added new catalogue!', { type: 'success' });
                     navigate('./../');
+                } else {
+                    toast(`An error occurred.`, { type: 'error' });
                 }
             }
 

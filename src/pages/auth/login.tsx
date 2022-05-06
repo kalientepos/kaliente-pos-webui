@@ -7,8 +7,9 @@ import AppPage from '../../components/page/page';
 import { loginWithCredentials } from '../../store/slices/auth/auth-thunk';
 import { AuthenticationRequestDto } from '../../models/dtos/auth/authentication.request';
 import { Box, Container, Paper, Stack, TextField, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
-import SaveIcon from '@mui/icons-material/Save';
+import SaveIcon from '@mui/icons-material/SaveAsSharp';
 
 interface LoginForm {
     email: string;
@@ -17,7 +18,6 @@ interface LoginForm {
 
 function Login() {
 
-    const toast = useRef<any>(null);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     
@@ -50,10 +50,14 @@ function Login() {
 
             const request: AuthenticationRequestDto = { email: data.email, password: data.password };
             
-            dispatch(loginWithCredentials(request))
-            .then(success => navigate('/'))
-            .catch();
+            const result = await dispatch(loginWithCredentials(request)) as any;
+            console.warn(result.type)
 
+            if(result.type.includes('fulfilled')) {
+                navigate('/')
+            } else {
+                toast(`Failed to login. Reason: ${result.error.message}`, { type: 'error' });
+            }
         }
     });
 
