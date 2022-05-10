@@ -3,7 +3,7 @@ import React from "react";
 import './app-drawer.scss';
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../store/slices/auth/auth-slice";
-import { Box, Button, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
+import { Divider, Drawer, ListItem, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import { useDispatch } from "react-redux";
 
 import AccountBoxIcon from '@mui/icons-material/AccountBox';

@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, Card, Container, Link, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Backdrop, Breadcrumbs, Button, Card, CircularProgress, Container, Link, Paper, Stack, TextField, Typography } from "@mui/material";
 import { FormikErrors, useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,18 +16,16 @@ interface ProductCatalogueCreateForm {
 }
 
 function ProductCatalogueAdd() {
+
     const {catalogueId} = useParams();
+
     const [productCatalogue, setProductCatalogue] = useState({
         id: '',
         title: '',
         description: ''
     });
-    
-    const pageState = useAppSelector((state) => state.productCatalogue)
 
-    const dispatch = useAppDispatch();
-
-    const navigate = useNavigate();
+    const [showBackdrop, setShowBackdrop] = React.useState(false);
 
 
     const formik = useFormik({
@@ -67,9 +65,15 @@ function ProductCatalogueAdd() {
     useEffect(() => {
         async function fetchById() {
             if(catalogueId) {
+                setShowBackdrop(true);
                 const response = await dispatch(getProductCatalogueById(catalogueId)) as any;
-                if(response)
+                if(response.type.includes('fulfilled')) {
                     setProductCatalogue(response.payload.product);
+                    setShowBackdrop(false);
+                } else {
+                    toast(response.error.message, { type: 'error' });
+                    navigate('./../../');
+                }
             }
         }
         fetchById();
@@ -83,7 +87,11 @@ function ProductCatalogueAdd() {
     useEffect(() => {
         formik.values.title = productCatalogue.title;
         formik.values.description = productCatalogue.description;
+
     }, [productCatalogue]);
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const breadcrumbs = [
         <Link underline="hover" key="1" color="inherit"
@@ -103,6 +111,12 @@ function ProductCatalogueAdd() {
 
     return (
         <Paper elevation={0}>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme: any) => theme.zIndex.drawer + 1 }}
+                open={showBackdrop}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Breadcrumbs separator="›" aria-label="breadcrumb">
                 {breadcrumbs}
             </Breadcrumbs>

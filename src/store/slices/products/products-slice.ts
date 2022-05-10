@@ -1,19 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
-import productsThunkBuilder, { ProductsPageState } from "./products-thunk";
+import { ProductDto } from "../../../models/dtos/product/product.dto";
+import productsThunkBuilder from "./products-thunk";
+
+export interface ProductsPageState {
+    products: Array<ProductDto>,
+}
 
 export interface ProductSliceState {
-    productsPage: ProductsPageState;
+    products: Array<ProductDto>,
+    isLoading: boolean;
+    errorMsg: string | null;
     removeDialog: {
         isOpen: boolean;
-        catalogueIdToRemove: string | null;
+        productIdToRemove: string | null;
     }
 }
 
 const initialState: ProductSliceState = { 
-    productsPage: { products: [], isLoading: false, errorMsg: null }, 
+    products: [], 
+    isLoading: false, 
+    errorMsg: null, 
     removeDialog: {
         isOpen: false,
-        catalogueIdToRemove: null
+        productIdToRemove: null
     }
 };
 
@@ -22,15 +31,15 @@ const productsSlice = createSlice({
     initialState,
     reducers: {
         clearProducts(state) {
-            state.productsPage.isLoading = false;
-            state.productsPage.products = [];
-            state.productsPage.errorMsg = null;
+            state.isLoading = false;
+            state.products = [];
+            state.errorMsg = null;
         },
         showRemoveDialog(state, action) {
-            state.removeDialog = { isOpen: true, catalogueIdToRemove: action.payload };
+            state.removeDialog = { isOpen: true, productIdToRemove: action.payload };
         },
         hideRemoveDialog(state) {
-            state.removeDialog = { isOpen: false, catalogueIdToRemove: null };
+            state.removeDialog = { isOpen: false, productIdToRemove: null };
         }
     },
     extraReducers: (builder) => productsThunkBuilder(builder)
