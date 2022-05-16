@@ -20,7 +20,9 @@ export const store = configureStore({
         productCatalogue: prodCataloguesSlice,
         [kalienteApi.reducerPath]: kalienteApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk).concat(kalienteApi.middleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+                                            // .concat(thunk)
+                                            .concat(kalienteApi.middleware),
     
 });
 

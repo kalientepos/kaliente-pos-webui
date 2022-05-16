@@ -19,7 +19,7 @@ const initialState: AdministationState = {
     }
 }
 
-const administrationSlic = createSlice({
+const administrationSlice = createSlice({
     name: 'Administration', 
     initialState,
     reducers: {
@@ -31,5 +31,5 @@ const administrationSlic = createSlice({
     },
     extraReducers: (builder) => adminstrationThunkBuilder(builder),
 });
-export const { removePersonnelsFromPage  } = administrationSlic.actions;
-export default administrationSlic.reducer;
+export const { removePersonnelsFromPage  } = administrationSlice.actions;
+export default administrationSlice.reducer;

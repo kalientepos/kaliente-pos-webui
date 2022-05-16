@@ -20,6 +20,7 @@ import PersonnelAdd from "./pages/administration/personnel-add";
 import AdminAdd from "./pages/administration/admin-add";
 import AdminList from "./pages/administration/admin-list";
 import AppPage from "./components/page/page";
+import AdministrationDashboard from "./pages/administration/dashboard";
 //
 
 
@@ -57,8 +58,10 @@ function App() {
                 <Administration/>
               </RequireAuthorization>
             }>
-            <Route path="" element={<PersonnelList/>}/>
-              <Route path="add" element={<PersonnelAdd/>}/>
+              <Route path="" element={<AdministrationDashboard />} />
+              <Route path="personnel" element={<PersonnelList />} />
+              <Route path="personnel/add" element={<PersonnelAdd />} />
+              <Route path="personnel/update/:personnelId" element={<PersonnelAdd />} />
             </Route>
         </Route>
       </Routes>
