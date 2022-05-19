@@ -31,10 +31,6 @@ function PersonnelList() {
             Administration
         </Link>,
         <Link underline="hover" key="1" color="inherit"
-            variant="h5" href="/administration/" onClick={() => { }}>
-            Dashboard
-        </Link>,
-        <Link underline="hover" key="1" color="inherit"
             variant="h5" href="/" onClick={() => { }}>
             Personnel Operations
         </Link>,

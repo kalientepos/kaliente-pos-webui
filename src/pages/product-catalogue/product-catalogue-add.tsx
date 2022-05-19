@@ -1,38 +1,45 @@
-import { Backdrop, Breadcrumbs, Button, Card, CircularProgress, Container, Link, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Backdrop, Breadcrumbs, Button, Card, CircularProgress, Container, FormControl, InputLabel, Link, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import { FormikErrors, useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { createProductCatalogue, getProductCatalogueById, updateProductCatalogue } from "../../store/slices/product-catalogues/prod-catalogues-thunk";
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useAppDispatch, useAppSelector } from "../../store";
 import Box from '@mui/material/Box';
-import { clearProductCatalogues } from "../../store/slices/product-catalogues/prod-catalogues-slice";
 import SaveIcon from '@mui/icons-material/Save';
 import { toast } from 'react-toastify';
+import { clearProductCatalogue, loadProductCatalogue } from "../../store/slices/product-catalogues/prod-catalogues-add-slice";
+import { createProductCatalogue, getAllProductCatalogues, getProductCatalogueById, updateProductCatalogue } from "../../store/slices/product-catalogues/prod-catalogues-add-thunk";
 
-interface ProductCatalogueCreateForm {
+interface ProductCatalogueUpdateForm {
+    id?: string;
     title: string;
     description: string;
+    parentCatalogueId: string;
 }
 
+const formData : ProductCatalogueUpdateForm = {
+    parentCatalogueId: '',
+    title: '',
+    description: ''
+};
+
 function ProductCatalogueAdd() {
+    const { catalogueId } = useParams();
 
-    const {catalogueId} = useParams();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
-    const [productCatalogue, setProductCatalogue] = useState({
-        id: '',
-        title: '',
-        description: ''
-    });
-
+    const pageState = useAppSelector(state => state.addProdCatalogue);
+    
     const [showBackdrop, setShowBackdrop] = React.useState(false);
 
+    const [parentCatalogueOptions, setParentCatalogueOptions] = useState([]);
 
     const formik = useFormik({
         enableReinitialize: true,
-        initialValues: productCatalogue,
+        initialValues: pageState.productCatalogue,
         validate: (data) => {
-            let errors: FormikErrors<ProductCatalogueCreateForm> = {};
+            let errors: FormikErrors<ProductCatalogueUpdateForm> = {};
 
             if(!data.title) {
                 errors.title = 'Catalogue must have a valid title!'
@@ -42,7 +49,8 @@ function ProductCatalogueAdd() {
         },
         onSubmit: async(data) => {
             if(catalogueId) {
-                const result = await dispatch(updateProductCatalogue(data));
+                const result = await dispatch(updateProductCatalogue({ id: data.id!, title: data.title!, description: data.description }));
+                console.warn(result);
                 if (result.type.includes('fulfilled')) {
                     toast('Successfully updated existing catalogue!', { type: 'success' });
                     navigate('./../../');
@@ -51,11 +59,12 @@ function ProductCatalogueAdd() {
                 }
             } else {
                 const result = await dispatch(createProductCatalogue(data));
+                console.warn(result);
                 if (result.type.includes('fulfilled')) {
                     toast('Successfully added new catalogue!', { type: 'success' });
                     navigate('./../');
                 } else {
-                    toast(`An error occurred.`, { type: 'error' });
+                    toast(`An error occurred. ${result.payload}`, { type: 'error' });
                 }
             }
 
@@ -68,7 +77,7 @@ function ProductCatalogueAdd() {
                 setShowBackdrop(true);
                 const response = await dispatch(getProductCatalogueById(catalogueId)) as any;
                 if(response.type.includes('fulfilled')) {
-                    setProductCatalogue(response.payload.product);
+                    dispatch(loadProductCatalogue(response.payload.product));
                     setShowBackdrop(false);
                 } else {
                     toast(response.error.message, { type: 'error' });
@@ -76,22 +85,20 @@ function ProductCatalogueAdd() {
                 }
             }
         }
+        async function fetchCataloguesForParenting() {
+            await dispatch(getAllProductCatalogues());
+        }
+
         fetchById();
+        fetchCataloguesForParenting();
 
         return () => {
-            dispatch(clearProductCatalogues());
+            dispatch(clearProductCatalogue());
         };
         
     }, []);
 
-    useEffect(() => {
-        formik.values.title = productCatalogue.title;
-        formik.values.description = productCatalogue.description;
 
-    }, [productCatalogue]);
-
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
     const breadcrumbs = [
         <Link underline="hover" key="1" color="inherit"
@@ -108,6 +115,11 @@ function ProductCatalogueAdd() {
             Add New Catalogue
         </Link>
     ];
+
+    const handleParentCatalogueIdChange = (event: SelectChangeEvent) => {
+        console.log(event.target.value);
+        formik.setFieldValue('parentCatalogueId', event.target.value);
+    };
 
     return (
         <Paper elevation={0}>
@@ -128,6 +140,18 @@ function ProductCatalogueAdd() {
                         <Stack direction="column" spacing={2}>
                             <TextField id="title" label="Title" variant="standard" value={formik.values.title} onChange={formik.handleChange} error={formik.touched.title && Boolean(formik.errors.title)} helperText={formik.touched.title && formik.errors.title} />
                             <TextField id="description" label="Description" variant="standard" value={formik.values.description} onChange={formik.handleChange} error={formik.touched.description && Boolean(formik.errors.description)} helperText={formik.touched.description && formik.errors.description}/>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Parent Catalogue</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="Parent Catalogue"
+                                    value={(formik.values.parentCatalogueId) ? formik.values.parentCatalogueId : ''}
+                                    onChange={handleParentCatalogueIdChange}
+                                >
+                                    {pageState.availableCatalogues.map(x => <MenuItem key={x.id!} value={x.id!}>{x.title}</MenuItem>) }
+                                </Select>
+                            </FormControl>
                             <LoadingButton startIcon={<SaveIcon />} loading={formik.isSubmitting } variant="contained" type="submit">Submit</LoadingButton>
                         </Stack>
                     </form>

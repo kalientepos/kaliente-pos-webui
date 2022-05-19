@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import { clearProducts } from "../../store/slices/products/products-slice";
 import SaveIcon from '@mui/icons-material/Save';
 import { toast } from 'react-toastify';
-import { getProductCatalogueById } from "../../store/slices/product-catalogues/prod-catalogues-thunk";
 
 interface ProductCatalogueCreateForm {
     title: string;

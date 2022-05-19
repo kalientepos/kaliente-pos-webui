@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import administrationSlice from "./slices/administration/administration-slice";
 import prodCataloguesSlice from "./slices/product-catalogues/prod-catalogues-slice";
 import productsSlice from "./slices/products/products-slice";
+import addProdCatalogueSlice from "./slices/product-catalogues/prod-catalogues-add-slice";
 import appSlice from "./slices/app-slice";
 import { kalienteApi } from "./slices/api/api-slice";
 
@@ -18,6 +19,7 @@ export const store = configureStore({
         administration: administrationSlice,
         product: productsSlice,
         productCatalogue: prodCataloguesSlice,
+        addProdCatalogue: addProdCatalogueSlice,
         [kalienteApi.reducerPath]: kalienteApi.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ProductCatalogueDto } from "../../../models/dtos/product-catalogue/product-catalogue.dto";
 import productCataloguesThunkBuilder from "./prod-catalogues-thunk";
 
-export interface ProductCataloguePageState {
+export interface ProductCataloguesPageState {
     productCatalogues: Array<ProductCatalogueDto>;
     isLoading: boolean;
     errorMsg: string | null;
@@ -12,7 +12,7 @@ export interface ProductCataloguePageState {
     }
 }
 
-const initialState: ProductCataloguePageState = { productCatalogues: [], isLoading: false, errorMsg: null, removeDialog: { isOpen: false, catalogueIdToRemove: null } };
+const initialState: ProductCataloguesPageState = { productCatalogues: [], isLoading: false, errorMsg: null, removeDialog: { isOpen: false, catalogueIdToRemove: null } };
 
 const productCataloguesSlice = createSlice({
     name: 'ProductCatalogues',

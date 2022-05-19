@@ -16,7 +16,7 @@ function AdministrationDashboard() {
 
     
     return (
-        <Paper elevation={5}>
+        <Paper elevation={0}>
             <Breadcrumbs separator="›" aria-label="breadcrumb">
                 {breadcrumbs}
             </Breadcrumbs>
