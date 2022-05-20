@@ -74,7 +74,6 @@ const productCatalogueAddThunkBuilder = (builder: ActionReducerMapBuilder<any>) 
     builder.addCase(getAllProductCatalogues.fulfilled, (state: AddProductCataloguePageState, {payload}) => {
         console.log('[GetAllProductCatalogues] FULLFILLED...');
         state.isLoading = true;
-        state.productCatalogue = initialState.productCatalogue;
         state.availableCatalogues = payload.productCatalogues;
     });
 
@@ -88,7 +87,7 @@ const productCatalogueAddThunkBuilder = (builder: ActionReducerMapBuilder<any>) 
         console.log('[GetCatalogueById] FULFILLED...');
         state.isLoading = false;
         state.errorMsg = null;
-        state.productCatalogue = { ...payload.productCatalogue, title: payload.productCatalogue.title!, description: payload.productCatalogue.description!, parentCatalogueId: payload.productCatalogue.parentCatalogueId! };
+        state.productCatalogue = { title: payload.product.title!, description: payload.product.description!, parentCatalogueId: payload.product.parentCatalogueId! };
     });
 
     builder.addCase(getProductCatalogueById.rejected, (state: AddProductCataloguePageState) => {

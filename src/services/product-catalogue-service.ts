@@ -16,6 +16,7 @@ const ProductCatalogueService = {
 
     async getProductCatalogueById(id: string): Promise<ApiResponse<GetProductCatalogueByIdResponseDto>> {
         const response = await getClient().get(`${baseApiUrl}/product_catalogue/getById/${id}`);
+        console.warn(response)
         return response;
     },
 

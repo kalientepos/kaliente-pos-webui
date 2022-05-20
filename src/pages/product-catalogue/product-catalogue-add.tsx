@@ -49,7 +49,7 @@ function ProductCatalogueAdd() {
         },
         onSubmit: async(data) => {
             if(catalogueId) {
-                const result = await dispatch(updateProductCatalogue({ id: data.id!, title: data.title!, description: data.description }));
+                const result = await dispatch(updateProductCatalogue({ id: data.id!, title: data.title!, description: data.description, parentCatalogueId: data.parentCatalogueId! }));
                 console.warn(result);
                 if (result.type.includes('fulfilled')) {
                     toast('Successfully updated existing catalogue!', { type: 'success' });
@@ -97,6 +97,13 @@ function ProductCatalogueAdd() {
         };
         
     }, []);
+
+    useEffect(() => {
+        console.log(pageState.productCatalogue);
+        formik.setFieldValue('title', pageState.productCatalogue.title);
+        formik.setFieldValue('description', pageState.productCatalogue.description);
+        formik.setFieldValue('parentCatalogueId', pageState.productCatalogue.parentCatalogueId!);
+    }, [pageState.productCatalogue])
 
 
 

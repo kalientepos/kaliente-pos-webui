@@ -45,6 +45,7 @@ const productCatalogueAddSlice = createSlice({
         clearProductCatalogue(state) {
             state.isLoading = false;
             state.errorMsg = null;
+            state.productCatalogue = initialState.productCatalogue;
         },
         showRemoveDialog(state, action) {
             state.removeDialog = { isOpen: true, catalogueIdToRemove: action.payload };
