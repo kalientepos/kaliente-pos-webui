@@ -6,10 +6,11 @@ import { useNavigate } from "react-router-dom";
 import AppPage from "../../components/page/page";
 import AdministrationService from "../../services/administration-service";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { removePersonnelsFromPage } from "../../store/slices/administration/administration-slice";
-import { getAllPersonnel } from "../../store/slices/administration/administration-thunk";
+import { hideRemoveDialog, removePersonnelsFromPage, showRemoveDialog } from "../../store/slices/administration/administration-slice";
+import { getAllPersonnel, removePersonnel } from "../../store/slices/administration/administration-thunk";
 import AddBoxIcon from '@mui/icons-material/AddBox'; 
 import PersonPinIcon from '@mui/icons-material/PersonPin';
+import { toast } from "react-toastify";
 
 const skeletonArray = Array(3).fill('');
 
@@ -24,6 +25,17 @@ function PersonnelList() {
     }, []);
     //#endregion
 
+    const confirmRemoveDialog = async () => {
+        const personnelId = personnelList.removeDialog.personnelEmailToRemove!!;
+        const result = await dispatch(
+            removePersonnel(personnelId)
+        );
+        if (result.type.includes('fulfilled')) {
+            toast(`Successfully removed personnel with email: ${personnelId}`, { type: 'success' });
+            dispatch(hideRemoveDialog());
+        }
+    };
+
 
     const breadcrumbs = [
         <Link underline="hover" key="1" color="inherit"
@@ -36,39 +48,29 @@ function PersonnelList() {
         </Link>,
     ];
 
-    // const confirmRemoveDialog = async () => {
-    //     const productId = personnelList.removeDialog.productIdToRemove!!;
-    //     const result = await dispatch(
-    //         removeProduct(productId)
-    //     );
-    //     if (result.type.includes('fulfilled')) {
-    //         toast(`Successfully removed product #${productId}`, { type: 'success' });
-    //         dispatch(hideRemoveDialog());
-    //     }
-    // };
 
 
     return (
         <Paper elevation={0}>
             <Dialog
-                open={false}
+                open={personnelList.removeDialog.isOpen}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Are you sure you want to remove personnel?"}
+                    {`Are you sure you want to remove personnel ${personnelList.removeDialog.personnelEmailToRemove}?`}
                 </DialogTitle>
                 {/* <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         You cannot
                     </DialogContentText>
                 </DialogContent> */}
-                {/* <DialogActions>
+                <DialogActions>
                     <Button onClick={() => dispatch(hideRemoveDialog())}>No</Button>
                     <Button onClick={confirmRemoveDialog} autoFocus>
                         Yes
                     </Button>
-                </DialogActions> */}
+                </DialogActions>
             </Dialog>
             <Breadcrumbs separator="›" aria-label="breadcrumb">
                 {breadcrumbs}
@@ -118,7 +120,7 @@ function PersonnelList() {
                                         <TableCell align="center">
                                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                                                 <Button color="success" variant="contained" onClick={() => navigate(`./update/${row.id}`)}>Edit</Button>
-                                                <Button color="error" variant="contained">Remove</Button>
+                                                <Button color="error" variant="contained" onClick={() => dispatch(showRemoveDialog(row.email))}>Remove</Button>
                                             </ButtonGroup>
                                         </TableCell>
                                     </TableRow>

@@ -5,9 +5,11 @@ import { RegisterAdminRequestDto } from "../../../models/dtos/administration/reg
 import { RegisterAdminResponseDto } from "../../../models/dtos/administration/register-admin.response";
 import { RegisterPersonnelRequestDto } from "../../../models/dtos/administration/register-personnel.request";
 import { RegisterPersonnelResponseDto } from "../../../models/dtos/administration/register-personnel.response";
+import { RemovePersonnelResponseDto } from "../../../models/dtos/administration/remove-personnel-response";
 import { AuthenticationRequestDto } from "../../../models/dtos/auth/authentication.request";
 import { AuthenticationResponseDto } from "../../../models/dtos/auth/authentication.response";
 import BaseResponse from "../../../models/dtos/base-response";
+import AdministrationService from "../../../services/administration-service";
 import AuthService from "../../../services/auth-service";
 import { AdministationState } from "./administration-slice";
 
@@ -29,6 +31,26 @@ export const registerAdmin = createAsyncThunk<RegisterAdminResponseDto, Register
         const response = await AuthService.registerAdmin(requestDto);
         if(response.data.payload) {
             return response.data.payload as RegisterAdminResponseDto;
+        }
+        else return thunkAPI.rejectWithValue(response);
+    }
+);
+export const updatePersonnel = createAsyncThunk<RegisterAdminResponseDto, RegisterAdminRequestDto>(
+    'admin/updatePersonnel',
+    async (requestDto, thunkAPI) => {
+        const response = await AuthService.registerAdmin(requestDto);
+        if (response.data.payload) {
+            return response.data.payload as RegisterAdminResponseDto;
+        }
+        else return thunkAPI.rejectWithValue(response);
+    }
+);
+export const removePersonnel = createAsyncThunk<RemovePersonnelResponseDto, string>(
+    'admin/removePersonnel',
+    async (personnelId, thunkAPI) => {
+        const response = await AdministrationService.removePersonnel(personnelId);
+        if (response.data.payload) {
+            return response.data.payload as RemovePersonnelResponseDto;
         }
         else return thunkAPI.rejectWithValue(response);
     }

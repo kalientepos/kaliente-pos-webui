@@ -38,6 +38,24 @@ const AdministrationService = {
         }
     },
 
+    async updatePersonnel(dto: any) : Promise<ApiResponse<any>> {
+        try {
+            const response = await getClient().post(`${baseApiUrl}/auth/updatePersonnel`, dto);
+            return response;
+        } catch (err: any) {
+            return err.response;
+        }
+    },
+
+    async removePersonnel(dto: any): Promise<ApiResponse<any>> {
+        try {
+            const response = await getClient().delete(`${baseApiUrl}/administration/removePersonnel?personnelEmail=${dto}`);
+            return response;
+        } catch (err: any) {
+            return err.response;
+        }
+    }
+
 
 }
 

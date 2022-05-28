@@ -8,14 +8,22 @@ export interface AdministationState {
 export interface PersonnelListState {
     isLoading: boolean,
     personnel: Array<any>,
-    errorMsg: string | null
+    errorMsg: string | null,
+    removeDialog: {
+        isOpen: boolean;
+        personnelEmailToRemove: string | null;
+    }
 }
 
 const initialState: AdministationState = {
     personnelList: {
         isLoading: false,
         personnel: [],
-        errorMsg: null
+        errorMsg: null,
+        removeDialog: {
+            isOpen: false,
+            personnelEmailToRemove: null
+        }
     }
 }
 
@@ -27,9 +35,15 @@ const administrationSlice = createSlice({
             state.personnelList.personnel = [];
             state.personnelList.errorMsg = null;
             state.personnelList.isLoading = false;
+        },
+        showRemoveDialog(state, action) {
+            state.personnelList.removeDialog = { isOpen: true, personnelEmailToRemove: action.payload };
+        },
+        hideRemoveDialog(state) {
+            state.personnelList.removeDialog = { isOpen: false, personnelEmailToRemove: null };
         }
     },
     extraReducers: (builder) => adminstrationThunkBuilder(builder),
 });
-export const { removePersonnelsFromPage  } = administrationSlice.actions;
+export const { removePersonnelsFromPage, showRemoveDialog, hideRemoveDialog  } = administrationSlice.actions;
 export default administrationSlice.reducer;

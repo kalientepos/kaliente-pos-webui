@@ -6,7 +6,7 @@ import { FormikErrors, useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "../../store";
-import { registerPersonnel } from "../../store/slices/administration/administration-thunk";
+import { registerPersonnel, updatePersonnel } from "../../store/slices/administration/administration-thunk";
 import { register } from "../../store/slices/auth/auth-slice";
 import { toast } from 'react-toastify';
 
@@ -45,6 +45,17 @@ function PersonnelAdd() {
             return errors;
         },
         onSubmit: async (data) => {
+            if(personnelId) {
+                const result = await dispatch(updatePersonnel(data));
+            } else {
+                const result = await dispatch(registerPersonnel(data));
+                if(result.type.includes('fulfilled')) {
+                    toast('Successfully registered new personnel!', { type: 'success' });
+                    navigate('./../');
+                } else {
+                    toast(`An error occurred.`, { type: 'error' });
+                }
+            }
             // if (catalogueId) {
             //     const result = await dispatch(updatePersonnel(data));
             //     if (result.type.includes('fulfilled')) {
