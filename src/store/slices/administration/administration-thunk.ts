@@ -1,5 +1,6 @@
 import { ActionReducerMapBuilder, AnyAction, createAsyncThunk, current } from "@reduxjs/toolkit";
 import jwtDecode from "jwt-decode";
+import { GetPersonnelByIdResponseDto } from "../../../models/dtos/administration/get-personnel-by-id.response";
 import { GetPersonnelListResponseDto } from "../../../models/dtos/administration/get-personnel-list.response";
 import { RegisterAdminRequestDto } from "../../../models/dtos/administration/register-admin.request";
 import { RegisterAdminResponseDto } from "../../../models/dtos/administration/register-admin.response";
@@ -21,6 +22,17 @@ export const getAllPersonnel = createAsyncThunk<GetPersonnelListResponseDto>(
         console.warn(response)
         if (response) {
             return response.data.payload;
+        }
+        else return response;
+    }
+);
+export const getPersonnelById = createAsyncThunk<GetPersonnelByIdResponseDto, string>(
+    'admin/getPersonnelById',
+    async (id, thunkAPI) => {
+        const response = await AdministrationService.getPersonnelById(id);
+        console.warn(response)
+        if (response) {
+            return response.data.payload as GetPersonnelByIdResponseDto;
         }
         else return response;
     }

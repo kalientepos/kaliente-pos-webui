@@ -20,6 +20,7 @@ const AuthService = {
             return err.response;
         }
     },
+    
 
     async authenticate(authenticateDto: AuthenticationRequestDto): Promise<ApiResponse<AuthenticationResponseDto>>  {
         try {

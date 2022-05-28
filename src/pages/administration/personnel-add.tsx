@@ -6,7 +6,7 @@ import { FormikErrors, useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "../../store";
-import { registerPersonnel, updatePersonnel } from "../../store/slices/administration/administration-thunk";
+import { getPersonnelById, registerPersonnel, updatePersonnel } from "../../store/slices/administration/administration-thunk";
 import { register } from "../../store/slices/auth/auth-slice";
 import { toast } from 'react-toastify';
 
@@ -56,23 +56,6 @@ function PersonnelAdd() {
                     toast(`An error occurred.`, { type: 'error' });
                 }
             }
-            // if (catalogueId) {
-            //     const result = await dispatch(updatePersonnel(data));
-            //     if (result.type.includes('fulfilled')) {
-            //         toast('Successfully updated existing personnel!', { type: 'success' });
-            //         navigate('./../../');
-            //     } else {
-            //         toast(`An error occurred.`, { type: 'error' });
-            //     }
-            // } else {
-            //     const result = await dispatch(createPersonnel(data));
-            //     if (result.type.includes('fulfilled')) {
-            //         toast('Successfully added new personnel!', { type: 'success' });
-            //         navigate('./../');
-            //     } else {
-            //         toast(`An error occurred.`, { type: 'error' });
-            //     }
-            // }
 
         }
     });
@@ -80,15 +63,15 @@ function PersonnelAdd() {
     useEffect(() => {
         async function fetchById() {
             if (personnelId) {
-                // setShowBackdrop(true);
-                // const response = await dispatch(getPersonnelById(personnelId)) as any;
-                // if (response.type.includes('fulfilled')) {
-                //     setPersonnelInfo(response.payload.product);
-                //     setShowBackdrop(false);
-                // } else {
-                //     toast(response.error.message, { type: 'error' });
-                //     navigate('./../../');
-                // }
+                setShowBackdrop(true);
+                const response = await dispatch(getPersonnelById(personnelId)) as any;
+                if (response.type.includes('fulfilled')) {
+                    setPersonnelInfo(response.payload.foundPersonnel);
+                    setShowBackdrop(false);
+                } else {
+                    toast(response.error.message, { type: 'error' });
+                    navigate('./../../');
+                }
             }
         }
         fetchById();
