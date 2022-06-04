@@ -29,10 +29,13 @@ function PersonnelList() {
         const personnelId = personnelList.removeDialog.personnelEmailToRemove!!;
         const result = await dispatch(
             removePersonnel(personnelId)
-        );
+        ) as any;
         if (result.type.includes('fulfilled')) {
             toast(`Successfully removed personnel with email: ${personnelId}`, { type: 'success' });
             dispatch(hideRemoveDialog());
+        } else {
+            console.log(result)
+            toast(`Failed to remove personnel: ${result.message}`, {type: 'error'})
         }
     };
 
@@ -119,7 +122,7 @@ function PersonnelList() {
                                         <TableCell align="center">{row.lastName}</TableCell>
                                         <TableCell align="center">
                                             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                                                <Button color="success" variant="contained" onClick={() => navigate(`./update/${row.id}`)}>Edit</Button>
+                                                {/* <Button color="success" variant="contained" onClick={() => navigate(`./update/${row.id}`)}>Edit</Button> */}
                                                 <Button color="error" variant="contained" onClick={() => dispatch(showRemoveDialog(row.email))}>Remove</Button>
                                             </ButtonGroup>
                                         </TableCell>
@@ -130,7 +133,8 @@ function PersonnelList() {
                     </Table>
                 </TableContainer>
                 <Box mt={2} />
-                <Button startIcon={<PersonPinIcon />} variant="contained" onClick={() => navigate('./add')}>Add New Personnel</Button>
+                <Button startIcon={<PersonPinIcon />} variant="contained" onClick={() => navigate('./personnel/add')}>Add New Personnel</Button>
+                <Button startIcon={<PersonPinIcon />} variant="contained" onClick={() => navigate('./../admin/add')}>Add New Admin</Button>
             </Box>
         </Paper>
     )

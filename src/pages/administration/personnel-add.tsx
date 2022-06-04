@@ -13,7 +13,8 @@ import { toast } from 'react-toastify';
 interface RegisterPersonnelForm {
     email: '',
     username?: '',
-    password: ''
+    password: '',
+    roleId: '',
 }
 
 function PersonnelAdd() {

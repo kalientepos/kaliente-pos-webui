@@ -2,6 +2,7 @@ import { ActionReducerMapBuilder, AnyAction, createAsyncThunk, current } from "@
 import jwtDecode from "jwt-decode";
 import { GetPersonnelByIdResponseDto } from "../../../models/dtos/administration/get-personnel-by-id.response";
 import { GetPersonnelListResponseDto } from "../../../models/dtos/administration/get-personnel-list.response";
+import { GetRolesResponseDto } from "../../../models/dtos/administration/get-roles.response";
 import { RegisterAdminRequestDto } from "../../../models/dtos/administration/register-admin.request";
 import { RegisterAdminResponseDto } from "../../../models/dtos/administration/register-admin.response";
 import { RegisterPersonnelRequestDto } from "../../../models/dtos/administration/register-personnel.request";
@@ -26,6 +27,7 @@ export const getAllPersonnel = createAsyncThunk<GetPersonnelListResponseDto>(
         else return response;
     }
 );
+
 export const getPersonnelById = createAsyncThunk<GetPersonnelByIdResponseDto, string>(
     'admin/getPersonnelById',
     async (id, thunkAPI) => {
@@ -78,6 +80,17 @@ export const registerPersonnel = createAsyncThunk<RegisterPersonnelResponseDto, 
         else return thunkAPI.rejectWithValue(response);
     }
 );
+
+export const getSystemRoles = createAsyncThunk<GetRolesResponseDto>(
+    'admin/getSystemRoles',
+    async(thunkAPI) => {
+        const response = await AdministrationService.getSystemRoles();
+        if(response) {
+            return response.data.payload as GetRolesResponseDto;
+        }
+        return response;
+    }
+)
 //#endregion
 
 //#region [Thunk Builder]

@@ -60,8 +60,8 @@ function App() {
             }>
               <Route path="" element={<AdministrationDashboard />} />
               <Route path="personnel" element={<PersonnelList />} />
-              <Route path="personnel/add" element={<PersonnelAdd />} />
-              <Route path="personnel/update/:personnelId" element={<PersonnelAdd />} />
+            <Route path="personnel/add" element={<PersonnelAdd />} />
+            <Route path="admin/add" element={<AdminAdd />} />
             </Route>
         </Route>
       </Routes>
