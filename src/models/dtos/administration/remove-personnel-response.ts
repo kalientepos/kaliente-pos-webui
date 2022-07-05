@@ -1,3 +1,3 @@
 export interface RemovePersonnelResponseDto {
-    removedPersonnelId: string;
+  removedPersonnelId: string;
 }

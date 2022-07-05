@@ -1,3 +1,3 @@
 export interface AuthenticationResponseDto {
-    jwt: string;
+  jwt: string;
 }

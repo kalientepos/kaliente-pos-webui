@@ -1,3 +1,3 @@
 export interface ProductUpdateResponseDto {
-    id: string;
+  id: string;
 }

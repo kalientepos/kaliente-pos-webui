@@ -1,4 +1,4 @@
 export interface RegisterAdminResponseDto {
-    registeredAdminId: string;
-    registeredAdminEmail: string;
+  registeredAdminId: string;
+  registeredAdminEmail: string;
 }

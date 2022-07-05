@@ -1,3 +1,3 @@
 export interface ProductCatalogueUpdateResponseDto {
-	updatedCatalogueId: string;
+  updatedCatalogueId: string;
 }

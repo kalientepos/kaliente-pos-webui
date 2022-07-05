@@ -1,3 +1,3 @@
 export interface ProductCatalogueAddResponseDto {
-	addedCatalogueId: string;
+  addedCatalogueId: string;
 }

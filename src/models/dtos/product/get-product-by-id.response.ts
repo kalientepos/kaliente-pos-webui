@@ -1,5 +1,5 @@
-import { ProductDto } from "./product.dto";
+import { ProductDto } from './product.dto';
 
 export interface GetProductByIdResponseDto {
-    foundProduct: ProductDto;
+  foundProduct: ProductDto;
 }

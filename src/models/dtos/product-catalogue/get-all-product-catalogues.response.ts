@@ -1,5 +1,5 @@
-import { ProductCatalogueDto } from "./product-catalogue.dto";
+import { ProductCatalogueDto } from './product-catalogue.dto';
 
 export interface GetAllProductCataloguesResponseDto {
-    productCatalogues: Array<ProductCatalogueDto>;
+  productCatalogues: Array<ProductCatalogueDto>;
 }

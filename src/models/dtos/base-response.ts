@@ -1,8 +1,6 @@
 export default interface BaseResponse<T> {
-    message: string;
-    payload: T;
+  message: string;
+  payload: T;
 }
 
-export interface BaseErrorResponse extends BaseResponse<null> {
-    
-}
+export interface BaseErrorResponse extends BaseResponse<null> {}

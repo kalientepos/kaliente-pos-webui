@@ -1,4 +1,4 @@
 export interface RegisterPersonnelResponseDto {
-    registeredPersonnelId: string;
-    registeredPersonnelEmail: string;
+  registeredPersonnelId: string;
+  registeredPersonnelEmail: string;
 }

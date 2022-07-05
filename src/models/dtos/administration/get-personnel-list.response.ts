@@ -1,5 +1,5 @@
-import { PersonnelDto } from "./personnel.dto";
+import { PersonnelDto } from './personnel.dto';
 
 export interface GetPersonnelListResponseDto {
-    foundPersonnel: Array<PersonnelDto>;
+  foundPersonnel: Array<PersonnelDto>;
 }

@@ -1,3 +1,3 @@
 export interface GetRolesResponseDto {
-    roles: Array<String>;
+  roles: Array<String>;
 }
